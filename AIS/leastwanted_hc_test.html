@@ -79,16 +79,33 @@ Highcharts.chart("chart", {
         y: 10,
         verticalAlign: "bottom",
     },
-    xAxis: {
-        labels: {
-            rotation: -45
-        }
-    },
-    yAxis: {
-        title: {
-            text: 'Total Phosphorus Load (MTA)'
-        }
-    },
+    xAxis: [
+            {
+              title: { text: null, margin: 11 },
+              labels: { staggerLines: 1, x: 0, reserveSpace: true },
+            },
+          ],
+
+    yAxis: [
+        {
+            ceiling: 11,
+            endOnTick: false,
+            max: 10,
+            visible: true,
+            title: { text: "# of Regulating Jurisdictions (out of 10)" },
+            plotLines: [
+                {
+                    className: "goal",
+                    color: "#ff0000",
+                    value: 10,
+                    width: 1.5,
+                    zIndex: 8,
+                
+                },
+            ],
+            tickInterval: 2,
+        },
+    ],
     credits: {
         enabled: false,
     },
