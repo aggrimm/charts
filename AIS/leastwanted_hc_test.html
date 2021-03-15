@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Least Wanted Fish Species </title>
+    <title>Total Phosphorus Loading Estimates to Lake Erie</title>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <script src="//code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -17,246 +17,137 @@
     <link rel="stylesheet" href="../css/BA_Style.css">
 </head>
 <body>
-	<div id="highcharts-189bacab-dd2e-4cdc-a68f-5371bfe26bde"></div>
+    <div id="chart" style="margin-right: 20px">
+    </div>
+
 <script>
-	var BA = new BlueAccounting;
-	
-  (function () {
-    var files = [
-        "https://code.highcharts.com/stock/highstock.js",
-        "https://code.highcharts.com/highcharts-more.js",
-        "https://code.highcharts.com/highcharts-3d.js",
-        "https://code.highcharts.com/modules/data.js",
-        "https://code.highcharts.com/modules/exporting.js",
-        "https://code.highcharts.com/modules/funnel.js",
-        "https://code.highcharts.com/modules/annotations.js",
-        "https://code.highcharts.com/modules/accessibility.js",
-        "https://code.highcharts.com/modules/solid-gauge.js",
-      ],
-      loaded = 0;
-    if (typeof window["HighchartsEditor"] === "undefined") {
-      window.HighchartsEditor = {
-        ondone: [cl],
-        hasWrapped: false,
-        hasLoaded: false,
-      };
-      include(files[0]);
-    } else {
-      if (window.HighchartsEditor.hasLoaded) {
-        cl();
-      } else {
-        window.HighchartsEditor.ondone.push(cl);
-      }
-    }
-    function isScriptAlreadyIncluded(src) {
-      var scripts = document.getElementsByTagName("script");
-      for (var i = 0; i < scripts.length; i++) {
-        if (scripts[i].hasAttribute("src")) {
-          if (
-            (scripts[i].getAttribute("src") || "").indexOf(src) >= 0 ||
-            (scripts[i].getAttribute("src") ===
-              "http://code.highcharts.com/highcharts.js" &&
-              src === "https://code.highcharts.com/stock/highstock.js")
-          ) {
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-    function check() {
-      if (loaded === files.length) {
-        for (var i = 0; i < window.HighchartsEditor.ondone.length; i++) {
-          try {
-            window.HighchartsEditor.ondone[i]();
-          } catch (e) {
-            console.error(e);
-          }
-        }
-        window.HighchartsEditor.hasLoaded = true;
-      }
-    }
-    function include(script) {
-      function next() {
-        ++loaded;
-        if (loaded < files.length) {
-          include(files[loaded]);
-        }
-        check();
-      }
-      if (isScriptAlreadyIncluded(script)) {
-        return next();
-      }
-      var sc = document.createElement("script");
-      sc.src = script;
-      sc.type = "text/javascript";
-      sc.onload = function () {
-        next();
-      };
-      document.head.appendChild(sc);
-    }
-    function each(a, fn) {
-      if (typeof a.forEach !== "undefined") {
-        a.forEach(fn);
-      } else {
-        for (var i = 0; i < a.length; i++) {
-          if (fn) {
-            fn(a[i]);
-          }
-        }
-      }
-    }
-    var inc = {},
-      incl = [];
-    each(document.querySelectorAll("script"), function (t) {
-      inc[t.src.substr(0, t.src.indexOf("?"))] = 1;
-    });
-    function cl() {
-      if (typeof window["Highcharts"] !== "undefined") {
-        var options = {
-          title: {
-            text: "Fish Species",
-            style: {
-              fontFamily: '"Montserrat", sans-serif',
-              color: "#333333",
-              fontSize: "18px",
-              fontWeight: "normal",
-              fontStyle: "normal",
-            },
-            margin: 15,
-            widthAdjust: -44,
-          },
-          subtitle: {
-            text:
-              "There are now 5 “least wanted” fish species that are regulated in all 10 jurisdictions, and all fish species are regulated in at least half (5 out of 10) of the Great Lakes states and provinces. Species with an asterisk (*) indicate species that were added to the Least Wanted list in 2018.",
-            align: "left",
-            widthAdjust: -260,
-            y: 10,
-            verticalAlign: "bottom",
-          },
-          exporting: {},
-          chart: {
-		  type: "column",
-		  events: {
-			  load: function () {
-				  var logoX = 15;
-				  var size = this.plotBox.y;
-				  size -= 5;
-				  
-				  if(this.chartWidth < 500){
-					  logoX = 10;
-				  }
-				  var img_width = (this.chartWidth - 350)/2 - logoX;
-				  var img_height = size;
-				  if(img_width >= img_height*4){
-					  // wide logo
-					  this.renderer.image("https://c1.staticflickr.com/1/826/26966705327_f80fcd7af1_o.png", logoX, 0, size * 4, size ).add();
-					  // ErieStat logo. Change factor to 3
-					  // this.renderer.image("https://c1.staticflickr.com/1/956/27966542108_a46fd4fa96_o.png", logoX, 0, size*3 , size).add();
-				  }else{
-					  // cube logo
-					  this.renderer.image("https://c1.staticflickr.com/1/868/40969378165_8bd2c065b9_o.png", logoX, 0, size, size).add();
-				  }
-			  }
-		  }
-	  }
-            inverted: false,
-            polar: false,
-            height: null,
-            width: 848,
-            style: {
-              fontFamily: '"Montserrat",sans-serif',
-              color: "#333",
-              fontSize: "12px",
-              fontWeight: "normal",
-              fontStyle: "normal",
-            },
-            spacingTop: 10,
-          },
-          plotOptions: {
-            series: { dataLabels: { enabled: false }, animation: false },
-          },
-          series: [
-            { name: "2008", turboThreshold: 0 },
-            { name: "2012", turboThreshold: 0 },
-            { name: "2018", turboThreshold: 0 },
-          ],
-          data: {
-            csv:
-              '"null";"2008";"2012";"2018"\n"Silver carp";8;10;10\n"Bighead carp";8;10;10\n"Grass carp";6;9;10\n"Black carp";8;10;10\n"Northern snakehead ";8;10;10\n"Zander";1;3;9\n"Wels catfish";0;1;7\n"Stone moroko";0;0;6\n"Tench*";1;3;5',
-            googleSpreadsheetKey: false,
-            googleSpreadsheetWorksheet: false,
-          },
-          xAxis: [
-            {
-              title: { text: null, margin: 11 },
-              labels: { staggerLines: 1, x: 0, reserveSpace: true },
-            },
-          ],
-          yAxis: [
-            {
-              ceiling: 11,
-              endOnTick: false,
-              max: 10,
-              visible: true,
-              title: { text: "# of Regulating Jurisdictions (out of 10)" },
-              plotLines: [
-                {
-                  className: "goal",
-                  color: "#ff0000",
-                  value: 10,
-                  width: 1.5,
-                  zIndex: 8,
-                },
-              ],
-              tickInterval: 2,
-            },
-          ],
-          colors: [
-            "#1c2d5a",
-            "#7ed3f7",
-            "#188ccc",
-            "#f7a35c",
-            "#8085e9",
-            "#f15c80",
-            "#e4d354",
-            "#2b908f",
-            "#f45b5b",
-            "#91e8e1",
-          ],
-          labels: { items: [{}] },
-          pane: { background: [] },
-          responsive: { rules: [] },
-          legend: { padding: 8, margin: 12 },
-          annotations: [{ shapes: [{}] }],
-        }; /*
-// Sample of extending options:
-Highcharts.merge(true, options, {
-    chart: {
-        backgroundColor: "#bada55"
-    },
-    plotOptions: {
-        series: {
-            cursor: "pointer",
-            events: {
-                click: function(event) {
-                    alert(this.name + " clicked\n" +
-                          "Alt: " + event.altKey + "\n" +
-                          "Control: " + event.ctrlKey + "\n" +
-                          "Shift: " + event.shiftKey + "\n");
-                }
-            }
-        }
+    var BA = new BlueAccounting;
+Highcharts.setOptions({
+    lang: {
+        numericSymbols: null,
+        thousandsSep: ','
     }
 });
-*/
-        new Highcharts.Chart(
-          "highcharts-189bacab-dd2e-4cdc-a68f-5371bfe26bde",
-          options
-        );
-      }
-    }
-  })();
+
+Highcharts.chart("chart", {
+    chart: {
+        type: "column",
+        events: {
+            load: function () {
+                var logoX = 15;
+                var size = this.plotBox.y;
+                size -= 5;
+
+                if(this.chartWidth < 500){
+                    logoX = 10;
+                    // size = this.chartWidth / 10;
+                }
+                var img_width = (this.chartWidth - 350)/2 - logoX;
+                var img_height = size;
+                // var img_url = "";
+                if(img_width >= img_height*4){
+                    // wide logo
+                    this.renderer.image("https://c1.staticflickr.com/1/826/26966705327_f80fcd7af1_o.png", logoX, 0, size * 4, size ).add();
+                    // ErieStat logo. Change factor to 3
+                    // this.renderer.image("https://c1.staticflickr.com/1/956/27966542108_a46fd4fa96_o.png", logoX, 0, size*3 , size).add();
+                }else{
+                    // cube logo
+                    this.renderer.image("https://c1.staticflickr.com/1/868/40969378165_8bd2c065b9_o.png", logoX, 0, size, size).add();
+                }
+                // var w = this.chartWidth - this.title.alignAttr.x;
+                // Blue Accounting Cube logo
+                // this.renderer.image("https://c1.staticflickr.com/1/868/40969378165_8bd2c065b9_o.png", logoX, 0, size, size).add();
+                // Blue Accouting Logo
+                // this.renderer.image("https://c1.staticflickr.com/1/826/26966705327_f80fcd7af1_o.png", logoX, 0, size * 4, size ).add();
+                // Blue Accounting ErieStat Logo
+                // this.renderer.image("https://c1.staticflickr.com/1/956/27966542108_a46fd4fa96_o.png", logoX, 0, size*3 , size).add();
+
+                // this.renderer.image("https://c1.staticflickr.com/5/4382/36578347693_3c6032000b_o.png", 0, 0, chart_width, chart_height).add();   //red watermark
+//                if (isBgImg) {
+//                    this.renderer.image("img/background_draft.png", this.plotLeft, this.plotTop, this.plotWidth, this.plotHeight).add(); //grey watermark
+//                }
+            }
+        }
+    },
+    title: {
+        text: 'Provisional Total Phosphorus Loading Estimates (MTA)<br/> to the Western and Central Lake Erie Basins By Source Type'
+    },
+    xAxis: {
+        labels: {
+            rotation: -45
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'Total Phosphorus Load (MTA)'
+        }
+    },
+    credits: {
+        enabled: false,
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal',
+        },
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+            pointStart: 2008
+        }
+    },
+
+    // series: [
+    //     // alternative color theme: Blue 2547316
+    //     {
+    //         name: "Load, all sources",
+    //         data: [23437,27944,26977,23724,18077,22271,20485],
+    //         color: "#7C5B40"
+    //     },
+    //     {
+    //         name: "Adjustment for Unmonitored Area",
+    //         data: [null, null, null, null, null, null, null,2028,956,2705,2011,3272,1140,1608,1163,1670,1063,1931,1421,1753,1293,1329,828,2858,1249,638,1543,981,1621,2378,4345,2669,1088,1626,1391,1635,1148,1747,1382,1398,2010,1243,930,661,1627,1441,1872,1688,1283,984],
+    //         color: "#FFC000"
+    //     },
+    //     {
+    //         name: "Tributary Monitored NPS",
+    //         data: [null, null, null, null, null, null, null,7679,3619,4397,3818,8471,3856,6985,4508,6448,4566,6545,5872,5447,2970,2508,4154,6205,6060,3914,7092,3120,2784,5613,8546,6192,2007,2915,2536,4332,4009,4488,4883,4281,6763,6373,4337,2783,6515,4351,4662,4173,3549,2272],
+    //         color: "#3618E8"
+    //     },
+    //     {
+    //         name: "Lake Huron Input",
+    //         data: [null, null, null, null, null, null, null,822,799,758,665,653,708,743,710,656,681,651,698,740,675,582,515,463,467,476,485,501,482,506,560,528,435,406,398,406,366,364,354,335,325,321,321,321,321,321,321,321,321,321],
+    //         color: "#FFFF99"
+    //     },
+    //     {
+    //         name: "Atmospheric Deposition",
+    //         data: [null, null, null, null, null, null, null,560,560,1119,1119,879,1550,1550,729,660,362,392,291,357,471,372,310,467,333,264,337,403,377,516,520,694,485,788,537,694,813,511,363,632,432,380,503,318,424,237,434,270,345,334],
+    //         color: "#ED1313"
+    //     },
+    //     {
+    //         name: "Indirect Point Sources",
+    //         data: [null, null, null, null, null, null, null,1284,1284,1156,1467,1566,1467,1275,1074,1035,840,900,881,754,757,777,653,589,587,554,547,473,404,663,562,532,529,478,454,536,433,485,467,494,489,437,422,349,390,356,370,327,337,332],
+    //         color: "#16EA48"
+    //     },
+    //     {
+    //         name: "Direct Point Sources",
+    //         data: [null, null, null, null, null, null, null,7103,5735,4959,5081,4163,2848,2357,1901,1455,1970,2027,1671,1727,1811,1774,1542,1701,1804,1523,1539,1681,1503,1334,1800,1543,1419,1569,1335,1456,1256,1410,1444,1476,1519,1419,1266,1117,1112,904,771,797,912,916],
+    //         color: "#00B0F0"
+    //     }
+    // ],
+
+  series: [
+    { name: "2008", turboThreshold: 0 },
+    { name: "2012", turboThreshold: 0 },
+    { name: "2018", turboThreshold: 0 },
+  ],
+  data: {
+    csv:
+      '"null";"2008";"2012";"2018"\n"Silver carp";8;10;10\n"Bighead carp";8;10;10\n"Grass carp";6;9;10\n"Black carp";8;10;10\n"Northern snakehead ";8;10;10\n"Zander";1;3;9\n"Wels catfish";0;1;7\n"Stone moroko";0;0;6\n"Tench*";1;3;5',
+    googleSpreadsheetKey: false,
+    googleSpreadsheetWorksheet: false,
+  },
+});
 </script>
 </body>
 </html>
