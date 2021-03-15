@@ -33,6 +33,8 @@ Highcharts.setOptions({
 Highcharts.chart("chart", {
     chart: {
         type: "column",
+        inverted: false,
+        polar: false,
         events: {
             load: function () {
                 var logoX = 15;
@@ -111,9 +113,6 @@ Highcharts.chart("chart", {
         enabled: false,
     },
     plotOptions: {
-        column: {
-            stacking: 'undefined',
-        },
         series: { dataLabels: { enabled: false }, animation: false },
     },
 
@@ -129,6 +128,11 @@ Highcharts.chart("chart", {
     googleSpreadsheetKey: false,
     googleSpreadsheetWorksheet: false,
   },
+  labels: { items: [{}] },
+  pane: { background: [] },
+  responsive: { rules: [] },
+  legend: { padding: 8, margin: 12 },
+  annotations: [{ shapes: [{}] }],
 });
 </script>
 </body>
