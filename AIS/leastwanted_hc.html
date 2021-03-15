@@ -1,0 +1,218 @@
+<div id="highcharts-189bacab-dd2e-4cdc-a68f-5371bfe26bde"></div>
+<script>
+  (function () {
+    var files = [
+        "https://code.highcharts.com/stock/highstock.js",
+        "https://code.highcharts.com/highcharts-more.js",
+        "https://code.highcharts.com/highcharts-3d.js",
+        "https://code.highcharts.com/modules/data.js",
+        "https://code.highcharts.com/modules/exporting.js",
+        "https://code.highcharts.com/modules/funnel.js",
+        "https://code.highcharts.com/modules/annotations.js",
+        "https://code.highcharts.com/modules/accessibility.js",
+        "https://code.highcharts.com/modules/solid-gauge.js",
+      ],
+      loaded = 0;
+    if (typeof window["HighchartsEditor"] === "undefined") {
+      window.HighchartsEditor = {
+        ondone: [cl],
+        hasWrapped: false,
+        hasLoaded: false,
+      };
+      include(files[0]);
+    } else {
+      if (window.HighchartsEditor.hasLoaded) {
+        cl();
+      } else {
+        window.HighchartsEditor.ondone.push(cl);
+      }
+    }
+    function isScriptAlreadyIncluded(src) {
+      var scripts = document.getElementsByTagName("script");
+      for (var i = 0; i < scripts.length; i++) {
+        if (scripts[i].hasAttribute("src")) {
+          if (
+            (scripts[i].getAttribute("src") || "").indexOf(src) >= 0 ||
+            (scripts[i].getAttribute("src") ===
+              "http://code.highcharts.com/highcharts.js" &&
+              src === "https://code.highcharts.com/stock/highstock.js")
+          ) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+    function check() {
+      if (loaded === files.length) {
+        for (var i = 0; i < window.HighchartsEditor.ondone.length; i++) {
+          try {
+            window.HighchartsEditor.ondone[i]();
+          } catch (e) {
+            console.error(e);
+          }
+        }
+        window.HighchartsEditor.hasLoaded = true;
+      }
+    }
+    function include(script) {
+      function next() {
+        ++loaded;
+        if (loaded < files.length) {
+          include(files[loaded]);
+        }
+        check();
+      }
+      if (isScriptAlreadyIncluded(script)) {
+        return next();
+      }
+      var sc = document.createElement("script");
+      sc.src = script;
+      sc.type = "text/javascript";
+      sc.onload = function () {
+        next();
+      };
+      document.head.appendChild(sc);
+    }
+    function each(a, fn) {
+      if (typeof a.forEach !== "undefined") {
+        a.forEach(fn);
+      } else {
+        for (var i = 0; i < a.length; i++) {
+          if (fn) {
+            fn(a[i]);
+          }
+        }
+      }
+    }
+    var inc = {},
+      incl = [];
+    each(document.querySelectorAll("script"), function (t) {
+      inc[t.src.substr(0, t.src.indexOf("?"))] = 1;
+    });
+    function cl() {
+      if (typeof window["Highcharts"] !== "undefined") {
+        var options = {
+          title: {
+            text: "Fish Species",
+            style: {
+              fontFamily: '"Montserrat", sans-serif',
+              color: "#333333",
+              fontSize: "18px",
+              fontWeight: "normal",
+              fontStyle: "normal",
+            },
+            margin: 15,
+            widthAdjust: -44,
+          },
+          subtitle: {
+            text:
+              "There are now 5 “least wanted” fish species that are regulated in all 10 jurisdictions, and all fish species are regulated in at least half (5 out of 10) of the Great Lakes states and provinces. Species with an asterisk (*) indicate species that were added to the Least Wanted list in 2018.",
+            align: "left",
+            widthAdjust: -260,
+            y: 10,
+            verticalAlign: "bottom",
+          },
+          exporting: {},
+          chart: {
+            type: "column",
+            inverted: false,
+            polar: false,
+            height: null,
+            width: 848,
+            style: {
+              fontFamily: '"Montserrat",sans-serif',
+              color: "#333",
+              fontSize: "12px",
+              fontWeight: "normal",
+              fontStyle: "normal",
+            },
+            spacingTop: 10,
+          },
+          plotOptions: {
+            series: { dataLabels: { enabled: false }, animation: false },
+          },
+          series: [
+            { name: "2008", turboThreshold: 0 },
+            { name: "2012", turboThreshold: 0 },
+            { name: "2018", turboThreshold: 0 },
+          ],
+          data: {
+            csv:
+              '"null";"2008";"2012";"2018"\n"Silver carp";8;10;10\n"Bighead carp";8;10;10\n"Grass carp";6;9;10\n"Black carp";8;10;10\n"Northern snakehead ";8;10;10\n"Zander";1;3;9\n"Wels catfish";0;1;7\n"Stone moroko";0;0;6\n"Tench*";1;3;5',
+            googleSpreadsheetKey: false,
+            googleSpreadsheetWorksheet: false,
+          },
+          xAxis: [
+            {
+              title: { text: null, margin: 11 },
+              labels: { staggerLines: 1, x: 0, reserveSpace: true },
+            },
+          ],
+          yAxis: [
+            {
+              ceiling: 11,
+              endOnTick: false,
+              max: 10,
+              visible: true,
+              title: { text: "# of Regulating Jurisdictions (out of 10)" },
+              plotLines: [
+                {
+                  className: "goal",
+                  color: "#ff0000",
+                  value: 10,
+                  width: 1.5,
+                  zIndex: 8,
+                },
+              ],
+              tickInterval: 2,
+            },
+          ],
+          colors: [
+            "#1c2d5a",
+            "#7ed3f7",
+            "#188ccc",
+            "#f7a35c",
+            "#8085e9",
+            "#f15c80",
+            "#e4d354",
+            "#2b908f",
+            "#f45b5b",
+            "#91e8e1",
+          ],
+          labels: { items: [{}] },
+          pane: { background: [] },
+          responsive: { rules: [] },
+          legend: { padding: 8, margin: 12 },
+          annotations: [{ shapes: [{}] }],
+        }; /*
+// Sample of extending options:
+Highcharts.merge(true, options, {
+    chart: {
+        backgroundColor: "#bada55"
+    },
+    plotOptions: {
+        series: {
+            cursor: "pointer",
+            events: {
+                click: function(event) {
+                    alert(this.name + " clicked\n" +
+                          "Alt: " + event.altKey + "\n" +
+                          "Control: " + event.ctrlKey + "\n" +
+                          "Shift: " + event.shiftKey + "\n");
+                }
+            }
+        }
+    }
+});
+*/
+        new Highcharts.Chart(
+          "highcharts-189bacab-dd2e-4cdc-a68f-5371bfe26bde",
+          options
+        );
+      }
+    }
+  })();
+</script>
+
+```
