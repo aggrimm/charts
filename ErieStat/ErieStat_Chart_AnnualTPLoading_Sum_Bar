@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Total Phosphorus Loading Estimates to Lake Erie</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <script src="//code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Montserrat font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+    <script src="../js/export-csv_glc.js"></script>
+    <script src="../js/BlueAccounting.js"></script>
+    <link rel="stylesheet" href="../css/BA_Style.css">
+</head>
+<body>
+    <div id="chart" style="margin-right: 20px">
+    </div>
+
+<script>
+    var BA = new BlueAccounting;
+Highcharts.setOptions({
+    lang: {
+        numericSymbols: null,
+        thousandsSep: ','
+    }
+});
+
+Highcharts.chart("chart", {
+    chart: {
+        type: "column",
+        backgroundColor: {
+            linearGradient: {x1: 0, x2: 1, y1: 1, y2: 0},
+            stops: [
+               [0, 'rgb(255,255,255)'],
+               [1, '#F2FAFF']
+            ]
+        },
+        accessibility: {
+            description: 'Chart displays total phosphorus loading to the Western and Central basins of Lake Erie. Tributary monitored nonpoint source (NPS) loading is the category that makes the largest contribution every year, followed by point sources and the adjustment factor for unmonitored areas. Lake Huron and atmospheric deposition represent relatively small contributions. The annual target of 6000 MTA has been exceeded in most years.'
+        },
+        events: {
+            load: function () {
+                var logoX = 15;
+                var size = this.plotBox.y;
+                size -= 8;
+
+                if(this.chartWidth < 500){
+                    logoX = 10;
+                    // size = this.chartWidth / 10;
+                }
+                var img_width = (this.chartWidth - 350)/2 - logoX;
+                var img_height = size;
+                // var img_url = "";
+                if(img_width >= img_height*4){
+                    // wide logo
+                    this.renderer.image("https://c1.staticflickr.com/1/826/26966705327_f80fcd7af1_o.png", logoX, 0, size * 4, size ).add();
+                    // ErieStat logo. Change factor to 3
+                    // this.renderer.image("https://c1.staticflickr.com/1/956/27966542108_a46fd4fa96_o.png", logoX, 0, size*3 , size).add();
+                }else{
+                    // cube logo
+                    this.renderer.image("https://c1.staticflickr.com/1/868/40969378165_8bd2c065b9_o.png", logoX, 0, size, size).add();
+                }
+                // var w = this.chartWidth - this.title.alignAttr.x;
+                // Blue Accounting Cube logo
+                // this.renderer.image("https://c1.staticflickr.com/1/868/40969378165_8bd2c065b9_o.png", logoX, 0, size, size).add();
+                // Blue Accouting Logo
+                // this.renderer.image("https://c1.staticflickr.com/1/826/26966705327_f80fcd7af1_o.png", logoX, 0, size * 4, size ).add();
+                // Blue Accounting ErieStat Logo
+                // this.renderer.image("https://c1.staticflickr.com/1/956/27966542108_a46fd4fa96_o.png", logoX, 0, size*3 , size).add();
+
+                // this.renderer.image("https://c1.staticflickr.com/5/4382/36578347693_3c6032000b_o.png", 0, 0, chart_width, chart_height).add();   //red watermark
+//                if (isBgImg) {
+//                    this.renderer.image("img/background_draft.png", this.plotLeft, this.plotTop, this.plotWidth, this.plotHeight).add(); //grey watermark
+//                }
+            }
+        }
+    },
+    title: {
+        text: 'Provisional Total Phosphorus Loading to the Western and Central Lake Erie Basins',
+        margin: 20,
+        widthAdjust: -370,
+        style: {
+            color: '#000000',
+            fontWeight: 'bold'
+        }
+    },
+    xAxis: {
+        accessibility: {
+            description: "Years from 2008 to 2019"
+        },
+        style: {
+            fontSize: "13px"
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'Total Phosphorus Load (MTA)'
+        },
+        accessibility: {
+            description: "Total Phosphorus Load in metric tonnes per annum (MTA)"
+        },
+        style: {
+            fontSize: "13px"
+        }
+    },
+    legend: {
+        width: 900,
+        itemWidth: 180,
+        align: 'left',
+        itemMarginBottom: 8,
+        itemStyle : '{ "word-wrap": "break-word"}',
+        symbolHeight: 11,
+        symbolWidth: 11,
+        symbolRadius: 0
+    },
+    credits: {
+        enabled: false,
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal',
+            groupPadding: 0.1,
+        },
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+            pointStart: 2008
+        }
+    },
+
+    // series: [
+    //     // alternative color theme: Blue 2547316
+    //     {
+    //         name: "Load, all sources",
+    //         data: [23437,27944,26977,23724,18077,22271,20485],
+    //         color: "#7C5B40"
+    //     },
+    //     {
+    //         name: "Adjustment for Unmonitored Area",
+    //         data: [null, null, null, null, null, null, null,2028,956,2705,2011,3272,1140,1608,1163,1670,1063,1931,1421,1753,1293,1329,828,2858,1249,638,1543,981,1621,2378,4345,2669,1088,1626,1391,1635,1148,1747,1382,1398,2010,1243,930,661,1627,1441,1872,1688,1283,984],
+    //         color: "#FFC000"
+    //     },
+    //     {
+    //         name: "Tributary Monitored NPS",
+    //         data: [null, null, null, null, null, null, null,7679,3619,4397,3818,8471,3856,6985,4508,6448,4566,6545,5872,5447,2970,2508,4154,6205,6060,3914,7092,3120,2784,5613,8546,6192,2007,2915,2536,4332,4009,4488,4883,4281,6763,6373,4337,2783,6515,4351,4662,4173,3549,2272],
+    //         color: "#3618E8"
+    //     },
+    //     {
+    //         name: "Lake Huron Input",
+    //         data: [null, null, null, null, null, null, null,822,799,758,665,653,708,743,710,656,681,651,698,740,675,582,515,463,467,476,485,501,482,506,560,528,435,406,398,406,366,364,354,335,325,321,321,321,321,321,321,321,321,321],
+    //         color: "#FFFF99"
+    //     },
+    //     {
+    //         name: "Atmospheric Deposition",
+    //         data: [null, null, null, null, null, null, null,560,560,1119,1119,879,1550,1550,729,660,362,392,291,357,471,372,310,467,333,264,337,403,377,516,520,694,485,788,537,694,813,511,363,632,432,380,503,318,424,237,434,270,345,334],
+    //         color: "#ED1313"
+    //     },
+    //     {
+    //         name: "Indirect Point Sources",
+    //         data: [null, null, null, null, null, null, null,1284,1284,1156,1467,1566,1467,1275,1074,1035,840,900,881,754,757,777,653,589,587,554,547,473,404,663,562,532,529,478,454,536,433,485,467,494,489,437,422,349,390,356,370,327,337,332],
+    //         color: "#16EA48"
+    //     },
+    //     {
+    //         name: "Direct Point Sources",
+    //         data: [null, null, null, null, null, null, null,7103,5735,4959,5081,4163,2848,2357,1901,1455,1970,2027,1671,1727,1811,1774,1542,1701,1804,1523,1539,1681,1503,1334,1800,1543,1419,1569,1335,1456,1256,1410,1444,1476,1519,1419,1266,1117,1112,904,771,797,912,916],
+    //         color: "#00B0F0"
+    //     }
+    // ],
+
+    series: [
+        {
+            name: "Tributary Monitored NPS",
+            data: [5639, 3650, 2381, 5574, 3915, 4146, 3929, 3391, 2157, 4773, 4716, 6710],
+            color: "#0D5E87"
+        },
+        {
+            name: "Point Sources",
+            data: [1864, 1687, 1465, 1502, 1259, 1142, 1154, 1250, 1249, 1165, 1215, 1310],
+            color: "#0092B0"
+        },
+        {
+            name: "Adjustment for Unmonitored Area",
+            data: [1422, 1276, 756, 2105, 1367, 1592, 1500, 1049, 838, 1691, 2079, 3025],
+            color: "#00C7C3"
+        },
+
+        {
+            name: "Lake Huron Input",
+            data: [321, 321, 321, 321, 321, 321, 321, 321, 321, 321, 321, 321],
+            color: "#7CFAC3"
+        },
+        {
+            name: "Atmospheric Deposition",
+            data: [315, 590, 284, 428, 270, 399, 273, 261, 276, 422, 411, 249],
+            color: "#27651F"
+        },
+
+        {
+            name: "Target",
+            type: 'line',
+            lineWidth: 3,
+            marker: {
+                radius: 0
+            },
+            data: [6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000],
+            color: "#E07000"
+        }
+    ]
+});
+</script>
+</body>
+</html>
