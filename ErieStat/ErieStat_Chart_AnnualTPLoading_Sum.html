@@ -34,6 +34,13 @@ Highcharts.setOptions({
 Highcharts.chart("chart", {
     chart: {
         type: "column",
+        backgroundColor: {
+            linearGradient: [0, 0, 0, 300],
+            stops: [
+               [0, 'rgb(255,255,255],
+               [1, 'rgb(255,247,214)']
+            ]
+        },
         accessibility: {
             description: 'Chart displays total phosphorus loading to the Western and Central basins of Lake Erie. Tributary monitored nonpoint source (NPS) loading is the category that makes the largest contribution every year, followed by point sources and the adjustment factor for unmonitored areas. Lake Huron and atmospheric deposition represent relatively small contributions. The annual target of 6000 MTA has been exceeded in most years.'
         },
