@@ -128,7 +128,9 @@ function BlueAccounting(){
             },
             title: {
                 text: title,
-                fontWeight: 'bold'
+                style: {
+                    fontWeight: 'bold'
+                }
             },
             subtitle: {
                 text: subtitle
@@ -368,7 +370,9 @@ function BlueAccounting(){
             },
             title: {
                 text: title,
-                fontWeight: 'bold'
+                style: {
+                    fontWeight: 'bold'
+                }
             },
 
             xAxis: {
