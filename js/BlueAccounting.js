@@ -127,10 +127,7 @@ function BlueAccounting(){
                 enabled: true
             },
             title: {
-                text: title,
-                style: {
-                    fontWeight: 'bold'
-                }
+                text: title
             },
             subtitle: {
                 text: subtitle
@@ -225,9 +222,7 @@ function BlueAccounting(){
             title: {
                 text: title,
                 style: {
-                    color: this.ColorPicker.body,
-                    fontWeight: 'bold'
-        }
+                    color: this.ColorPicker.body
                 }
             },
             subtitle: {
@@ -369,10 +364,7 @@ function BlueAccounting(){
                 enabled: true
             },
             title: {
-                text: title,
-                style: {
-                    fontWeight: 'bold'
-                }
+                text: title
             },
 
             xAxis: {
@@ -393,5 +385,3 @@ function BlueAccounting(){
         })
     }
 }
-
-
