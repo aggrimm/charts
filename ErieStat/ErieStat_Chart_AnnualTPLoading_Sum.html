@@ -6,6 +6,8 @@
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <script src="//code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
     <!-- Bootstrap styles -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -75,6 +77,9 @@ Highcharts.chart("chart", {
     xAxis: {
         labels: {
             rotation: -45
+        }
+        accessibility: {
+            description: 'Percentage usage'
         }
     },
     yAxis: {
@@ -146,7 +151,7 @@ Highcharts.chart("chart", {
         {
             name: "Tributary Monitored NPS",
             data: [5639, 3650, 2381, 5574, 3915, 4146, 3929, 3391, 2157, 4773, 4716, 6710],
-            color: "0D5E87"
+            color: "#0D5E87"
         },
         {
             name: "Lake Huron Input",
