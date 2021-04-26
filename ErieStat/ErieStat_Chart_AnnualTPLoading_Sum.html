@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
     <script src="../js/export-csv_glc.js"></script>
     <script src="../js/BlueAccounting.js"></script>
-    <link rel="stylesheet" href="../css/BA_Style_Rev.css">
+    <link rel="stylesheet" href="../css/BA_Style.css">
 </head>
 <body>
     <div id="chart" style="margin-right: 20px">
@@ -88,7 +88,6 @@ Highcharts.chart("chart", {
     plotOptions: {
         column: {
             stacking: 'normal',
-            groupPadding: 0.1,
         },
         series: {
             label: {
@@ -140,28 +139,28 @@ Highcharts.chart("chart", {
     series: [
         {
             name: "Adjustment for Unmonitored Area",
-            data: [1242, 1019, 673, 1726, 1171, 1342, 1182, 912, 804, 1516, 1775, 2616],
-            color: #6FC212"
+            data: [1422, 1276, 756, 2105, 1367, 1592, 1500, 1049, 838, 1691, 2079, 3025],
+            color: BA.ColorPicker.orange
         },
         {
             name: "Tributary Monitored NPS",
-            data: [5636, 3647, 2379, 5572, 3917, 4148, 3950, 3403, 2224, 4779, 4721, 6712],
-            color: "#0d5aE87"
-        },
-        {
-            name: "Atmospheric Deposition",
-            data: [685, 506, 318, 424, 237, 434, 270, 345, 334, 553, 401, 406],
-            color: "#008181"
-        },
-        {
-            name: "Point Sources",
-            data: [1864, 1687, 1467, 1501, 1259, 1141, 1124, 1249, 1248, 1121, 1198, 1307],
-            color: "#9FDB7F"
+            data: [5639, 3650, 2381, 5574, 3915, 4146, 3929, 3391, 2157, 4773, 4716, 6710],
+            color: BA.ColorPicker.blue1
         },
         {
             name: "Lake Huron Input",
             data: [321, 321, 321, 321, 321, 321, 321, 321, 321, 321, 321, 321],
-            color: "#9BCCFF"
+            color: BA.ColorPicker.yellow
+        },
+        {
+            name: "Atmospheric Deposition",
+            data: [315, 590, 284, 428, 270, 399, 273, 261, 276, 422, 411, 249],
+            color: BA.ColorPicker.blue7
+        },
+        {
+            name: "Point Sources",
+            data: [1864, 1687, 1465, 1502, 1259, 1142, 1154, 1250, 1249, 1165, 1215, 1310],
+            color: BA.ColorPicker.blue6
         },
         {
             name: "Target",
@@ -171,7 +170,7 @@ Highcharts.chart("chart", {
                 radius: 0
             },
             data: [6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000],
-            color: "#E07000"
+            color: BA.ColorPicker.target_red
         }
     ]
 });
