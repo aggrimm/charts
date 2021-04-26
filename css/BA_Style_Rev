@@ -1,0 +1,322 @@
+body{
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+#map { position: absolute; top:0; bottom:0; right:50%; left:0;}
+#right-panel {
+    margin-left: 50%;
+    padding-left: 6px;
+    margin-right: 10px;
+}
+#intro{
+    /*font-style: italic;*/
+    position: absolute;
+    top:25%;
+    left: 52%;
+    margin-right: 2%;
+    /*text-align: center;*/
+    /*text-transform: capitalize;*/
+}
+#narrative-section{
+    height: 20%;
+}
+#narrative-caption {
+    color: #1b75ba;
+    font-size: x-large;
+    text-align: center;
+}
+
+#narrative-content{
+    /*text-indent: 50px;*/
+}
+#watersheds {
+    position: absolute;
+    top:20%;
+}
+#watershed-caption{
+    color: #1b75ba;
+    font-size: x-large;
+    text-align: center;
+}
+#watershed-description{
+
+}
+
+#chart-canvas{
+    padding-top: 5%;
+    /*position: absolute;*/
+    /*height: 70%;*/
+    padding-bottom: 5%;
+}
+.tab {
+    overflow: hidden;
+    /*border: 1px solid #ccc;*/
+    /*background-color: #f1f1f1;*/
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    font-family: "Montserrat", sans-serif;
+    float: left;
+    border: 1px solid #bbb;
+    border-bottom: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    margin-right: 3px;
+    height: 60px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #aaa;
+    color: #1b75ba;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: white;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    /*border-top: none;*/
+}
+.tabcontent {
+    animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+/* Style the close button */
+.topright {
+    /*float: left;*/
+    cursor: pointer;
+    font-size: 28px;
+}
+
+/**/
+.SWI-table-header {
+    background-color: #7eb4d2;
+}
+.SWI-DT-table {
+    align-content: center;
+    text-align: center;
+    /*padding: 2px;*/
+
+}
+.SWI-DT-table th{
+    align-content: flex-start;
+}
+.SWI-DT-table td{
+    padding: 5px;
+}
+.table img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.card-body{
+    text-align: left;
+    display: inline-block;
+}
+.col-sm img{
+    height: 50px;
+}
+.row{
+    margin-left: 0px;
+    margin-right: 0px;
+    vertical-align: middle;
+}
+li {
+    font-size: small;
+    text-align: left;
+    font-weight: bold;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+
+
+#lower-canvas{
+    margin-top: 50%;
+}
+.vl {
+    border-left: 6px solid #1b75ba;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
+}
+.highcharts-root text{
+    /*font-family: Lato, sans-serif;*/
+    font-family: "Montserrat", sans-serif;
+}
+.highcharts-axis-line{
+    fill: '#1c2d5a';
+    stroke: '#1c2d5a';
+}
+.leaflet-popup-content-wrapper{
+    /*font-family: 'Montserrat', sans-serif;*/
+    /*font-family: Lato Regular, sans-serif;*/
+}
+.highcharts-title text{
+    /*font-family: "Montserrat", sans-serif;*/
+    font-weight: bold;
+    font-size: 18px;
+}
+.highcharts-legend-item text{
+    /*font-family: "Montserrat", sans-serif;*/
+    font-size: 12px;
+    font-weight: normal;
+}
+.highcharts-axis-labels.highcharts-xaxis-labels  text{
+    /*font-family: "Montserrat", sans-serif;*/
+    font-size: 12px;
+}
+.highcharts-axis-labels.highcharts-yaxis-labels  text{
+    /*font-family: "Montserrat", sans-serif;*/
+    font-size: 12px;
+
+}
+/*#container {*/
+    /*height: 300px;*/
+    /*margin-top: 2em;*/
+    /*min-width: 380px;*/
+/*}*/
+.highcharts-data-table table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    background: white;
+    min-width: 100%;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+    border: 1px solid silver;
+    padding: 0.5em;
+}
+.highcharts-data-table tr:nth-child(even), .highcharts-data-table thead tr {
+    background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+    background: #eff;
+}
+.highcharts-data-table caption {
+    border-bottom: none;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+
+.highcharts-background {
+    /*fill: #d8e2eb;*/
+}
+/*.highcharts-legend text {*/
+    /*text-shadow: 0 0 2px black, 0 0 2px black;*/
+    /*font-size: small*/
+/*}*/
+/*.highcharts-point.highcharts-color-0,*/
+/*.highcharts-legend-item.highcharts-color-0 .highcharts-point,*/
+/*.highcharts-tooltip .highcharts-color-0 {*/
+    /*fill: #102A58;*/
+/*}*/
+/*.highcharts-tooltip.highcharts-color-0,*/
+/*.highcharts-data-label-connector.highcharts-color-0 {*/
+    /*stroke: #102A58;*/
+/*}*/
+
+/*.highcharts-point.highcharts-color-1,*/
+/*.highcharts-legend-item.highcharts-color-1 .highcharts-point,*/
+/*.highcharts-tooltip .highcharts-color-1 {*/
+    /*fill: #9BCCFF;*/
+/*}*/
+/*.highcharts-tooltip.highcharts-color-1,*/
+/*.highcharts-data-label-connector.highcharts-color-1 {*/
+    /*stroke: #9BCCFF;*/
+/*}*/
+
+.highcharts-point.highcharts-color-2,
+.highcharts-legend-item.highcharts-color-2 .highcharts-point,
+.highcharts-tooltip .highcharts-color-2 {
+    fill: #9FDB7F;
+}
+.highcharts-tooltip.highcharts-color-2,
+.highcharts-data-label-connector.highcharts-color-2 {
+    stroke: #9FDB7F;
+}
+
+.highcharts-point.highcharts-color-3,
+.highcharts-legend-item.highcharts-color-3 .highcharts-point,
+.highcharts-tooltip .highcharts-color-3 {
+    fill: #6FC212;
+}
+.highcharts-tooltip.highcharts-color-3,
+.highcharts-data-label-connector.highcharts-color-3 {
+    stroke: #6FC212;
+}
+.highcharts-point.highcharts-color-4,
+.highcharts-legend-item.highcharts-color-4 .highcharts-point,
+.highcharts-tooltip .highcharts-color-4 {
+    fill: #008181;
+}
+.highcharts-tooltip.highcharts-color-4,
+.highcharts-data-label-connector.highcharts-color-4 {
+    stroke: #008181;
+}
+
+.highcharts-point.highcharts-color-5,
+.highcharts-legend-item.highcharts-color-5 .highcharts-point,
+.highcharts-tooltip .highcharts-color-5 {
+    fill: #0074B2;
+}
+.highcharts-tooltip.highcharts-color-5,
+.highcharts-data-label-connector.highcharts-color-5 {
+    stroke: #0074B2;
+}
+
+.highcharts-point.highcharts-color-6,
+.highcharts-legend-item.highcharts-color-6 .highcharts-point,
+.highcharts-tooltip .highcharts-color-6 {
+    fill: #0D5E87;
+}
+.highcharts-tooltip.highcharts-color-6,
+.highcharts-data-label-connector.highcharts-color-6 {
+    stroke: #0D5E87;
+}
+
+.highcharts-series .highcharts-point-select {
+    fill: #E07000;
+    stroke: #f00;
+    stroke-dasharray: 10
+}
