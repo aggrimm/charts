@@ -197,16 +197,16 @@ li {
 }
 .highcharts-legend-item text{
     /*font-family: "Montserrat", sans-serif;*/
-    font-size: 12px;
+    font-size: 14px;
     font-weight: normal;
 }
 .highcharts-axis-labels.highcharts-xaxis-labels  text{
     /*font-family: "Montserrat", sans-serif;*/
-    font-size: 12px;
+    font-size: 14px;
 }
 .highcharts-axis-labels.highcharts-yaxis-labels  text{
     /*font-family: "Montserrat", sans-serif;*/
-    font-size: 12px;
+    font-size: 14px;
 
 }
 /*#container {*/
