@@ -117,7 +117,17 @@
         style: {
             color: "#93866E",
             fillColor: "#0D5E87",
-            fillOpacity: 0.8,
+            function (feature) {
+                if (feature.properties.MergeNm === 'Maumee') {
+                    return { fillColor: "#0D5E87"};
+                } else if (feature.properties.MergeNm === 'Raisin') {
+                    return { fillColor: "#9FD9FF"};
+                } else if (feature.properties.MergeNm === 'Cuyahoga') {
+                    return { fillColor: "#D4EDE9"};
+                } else {
+                    return { fillColor: 'white'};
+                }
+            fillOpacity: 0.7,
         }
     }).addTo(map);
 
