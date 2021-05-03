@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring SRP Loading in ErieStat Watersheds</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          <!-- subresource integrity is a security feature ensuring that fetched resources are not manipulated -->
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <script src="https://leaflet.github.io/Leaflet.label/leaflet.label.js"></script>
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+            integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
+            crossorigin=""></script>
+    <script src="//code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <!--<script src="https://code.highcharts.com/modules/export-data.js"></script> this module is not behaving as expected-->
+
+    <script src="../js/BlueAccounting.js"></script>
+    <script src="../js/ErieStat_2019.js"></script>
+    <script src="../js/export-csv_glc.js"></script>
+
+    <link rel="stylesheet" href="../css/BA_Style.css">
+
+</head>
+<body>
+<!-- // New line  -->
+<style>
+  .label {
+    font-weight: 700;
+    /* text-transform: uppercase; */
+    text-align: center;
+    margin-top: -1em;
+    font-size: 11px;
+    opacity: 0.5;
+  }
+
+  .label div {
+    position: relative;
+    left: -50%;
+    top: 10px;
+    /* text-shadow: 0px 2px 1px rgba(255,255,255,0.85); */
+  }
+
+</style>
+
+<div>
+    <div id="map"></div>
+    <div class="vl"></div>
+    <div id="right-panel">
+        <div id="intro"></div>
+        <div id="narrative-section">
+            <p id="narrative-caption"></p>
+            <p id="narrative-content"></p>
+        </div>
+        <!-- Tab links -->
+        <div class="tab">
+            <button class="tablinks" onclick="openFractionChart(event, 'SRP_S')" id="defaultOpen">Spring SRP Loading and<br> Spring Discharge</button>
+            <button class="tablinks" onclick="openFractionChart(event, 'SRP_FWMC')">Spring SRP FWMC</button>
+            <button class="tablinks" onclick="openFractionChart(event, 'TP_S')" >Spring TP Loading and<br> Spring Discharge</button>
+            <button class="tablinks" onclick="openFractionChart(event, 'TP_FWMC_S')">Spring TP FWMC</button>
+        </div>
+
+        <!-- Tab content -->
+        <div id="SRP_S" class="tabcontent">
+            <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+            <div id="chart1" class="charts"></div>
+        </div>
+
+        <div id="SRP_FWMC" class="tabcontent">
+            <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+            <div>
+                <div id="chart2" class="charts"></div>
+            </div>
+        </div>
+        <div id="TP_S" class="tabcontent">
+            <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+            <div id="chart3" class="charts"></div>
+        </div>
+        <div id="TP_FWMC_S" class="tabcontent">
+            <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+            <div id="chart4" class="charts"></div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var data;
+    var serviceURL = "https://services7.arcgis.com/Tk0IbKIKhaoYn5sa/arcgis/rest/services/ErieStat_SpringSRP_Map_WFL1/FeatureServer";
+    var BA = new BlueAccounting();
+    var ES = new ErieStat();
+    var metric1 = ES.metrics.SRP_L_S;
+    var metric2 = ES.metrics.SRP_FWMC_S;
+    var metric3 = ES.metrics.TP_L_S;
+    var metric4 = ES.metrics.TP_FWMS_S;
+    var metric_discharge = ES.metrics.Discharge_S;
+    var initWatershed = 'Maumee';
+    var selectedFeature;
+
+    var map = L.map("map").setView([42.1, -82.0], 7);
+    L.esri.basemapLayer("Topographic").addTo(map);
+
+    const IS_EMPTY = (val) => val == "";
+
+    var srp_watershed_individual = L.esri.featureLayer({
+        url: serviceURL + "/2",
+        simplifyFactor: 0.7,
+        weight: 1,
+        style: {
+            color: "#93866E",
+            fillColor: "#008181",
+            fillOpacity: 0.8,
+        }
+    }).addTo(map);
+
+    var srp_watershed_combined = L.esri.featureLayer({
+        url: serviceURL + "/1",
+        opacity: 0.5,
+        simplifyFactor: 0.7,
+        weight: 2,
+        style: {
+            color: "#80735D",
+            fillColor: "#000000",
+            fillOpacity: 0
+        }
+    }).addTo(map);
+
+    var watersheds = L.esri.featureLayer({
+        url: serviceURL + "/0",
+        opacity: 0.7,
+        simplifyFactor: 0.7,
+        weight: 2,
+        style: {
+            color: "#000000",
+            fill: false,
+        }
+    }).addTo(map);
+
+    // var labels = {};
+
+    srp_watershed_combined.on('createfeature', function (e) {
+      var id = e.feature.id;
+      var feature = srp_watershed_combined.getFeature(id);
+      var center = feature.getBounds().getCenter();
+      // var label = L.marker(center, {
+      //   icon: L.divIcon({
+      //     iconSize: null,
+      //     className: 'label',
+      //     html: '<div>' + e.feature.properties.Label + '</div>'
+      //   })
+      // }).addTo(map);
+        labels[id] = label;
+    });
+
+    srp_watershed_combined.on('addfeature', function (e){
+      var label = labels[e.feature.id];
+      if (label){
+        label.addTo(map);
+      }
+    });
+
+    // Hide tabs
+    var tabs = document.getElementsByClassName("tab");
+    for (i = 0; i < tabs.length; i++) {
+        tabs[i].style.display = "none";
+    }
+
+    $.getJSON("../data/ErieStat_2020.json", function(d){
+        data = d;
+    }).done(function () {
+        ES.init(data);
+    }).then(function () {
+        L.esri.featureLayer({
+            url: "https://services7.arcgis.com/Tk0IbKIKhaoYn5sa/arcgis/rest/services/ErieStat_Monitoring/FeatureServer/0",
+            where: "SPRING = 'Y'",
+            pointToLayer: function (geojson, latlng) {
+                var p = L.circle(latlng, {
+                    radius: 50,
+                    opacity: 0,
+                    color: "#A80084"
+                });
+
+                p.bindPopup("<table>" +
+                    //                    "<tr><th>Program: </th><td>{{geojson.properties.Program}}</td></tr>" +
+                    "<tr><th>Monitoring Station: </th><td>" + geojson.properties.Station + "</td></tr>" +
+                    "</table>");
+                return p;
+            }
+        }).addTo(map);
+
+        // Default to Maumee river when page initialize
+        ES.buildNarratives(initWatershed + ' River');
+        loadChart(initWatershed + " River");
+        renderWatershed(initWatershed);
+    });
+
+    map.on("click", function (e){
+        if(selectedFeature){
+            map.removeLayer(selectedFeature);
+        }
+        srp_watershed_combined.query().nearby(e.latlng, 100).simplify(map, 0.5).run(function (error, featureCollection){
+            if(featureCollection.features.length >0){
+                $("#intro").css("visibility", "hidden");
+                $(".tab").css("display", "block");
+                document.getElementById("defaultOpen").click();
+                if (featureCollection.features.length > 0) {
+                    var name = ES.watershedNames[featureCollection.features[0].properties["MergeNm"]];
+                    // var label = featureCollection.features[0].properties["Label"];
+                    if (ES.buildNarratives(name)) {
+                        loadChart(name);
+                    } else {
+                        $(".charts").html("");
+                    }
+                    renderWatershed(featureCollection.features[0].properties["MergeNm"]);
+                }
+            }
+        })
+    });
+
+    function loadChart(name) {
+        function dataToArray(vals){
+            let array = []
+            for(let i =0;i < vals.length;i++){array.push(vals.get(i))}
+            return array;
+        }
+
+        var s1_data = ES.getWatershedData(name, metric1.name);
+        var s2_data = ES.getWatershedData(name, metric2.name);
+        var s3_data = ES.getWatershedData(name, metric3.name);
+        var s4_data = ES.getWatershedData(name, metric4.name);
+        var discharge_data = ES.getWatershedData(name, metric_discharge.name);
+
+        var s1_data_array = dataToArray(s1_data);
+        var s2_data_array = dataToArray(s2_data);
+        var s3_data_array = dataToArray(s3_data);
+        var s4_data_array = dataToArray(s4_data);
+        var discharge_data_array = dataToArray(discharge_data);
+
+        if(!s1_data_array.every(IS_EMPTY) || !discharge_data_array.every(IS_EMPTY)){
+            var chart1 = BA.buildDualAxesChart(s1_data_array, metric1.name, metric1.unit, '#0D5E87', "column",
+                discharge_data_array, metric_discharge.name, metric_discharge.unit, "#0092B0", "line",
+                "chart1", name + " " + metric1.name + " and " + metric_discharge.name, "<i>*SRP: Soluble reactive phosphorus</i>",
+                ES.xAxis_start, ES.targets[name][metric1.name], null, //ES.targets[name][metric2.name],
+                (window.innerHeight  - $("#narrative-section").height()) * 0.7
+            );
+        }else{
+            $("#chart1").html("<i>* Data under development.</i>");
+        }
+
+        if(!s2_data_array.every(IS_EMPTY)){
+            var chart2 = BA.buildSingleChart("line", s2_data_array, metric2.name, metric2.unit, '#0D5E87',
+                ES.xAxis_start, name + " " + metric2.name, "<i>*SRP: Soluble reactive phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
+                ES.targets[name][metric2.name], "chart2", (window.innerHeight  - $("#narrative-section").height()) * 0.7
+            );
+        }
+        else {
+            $("#chart2").html("<i>* Data under development.</i>");
+        }
+
+        if(!s3_data_array.every(IS_EMPTY) || !discharge_data_array.every(IS_EMPTY)){
+            var chart3 = BA.buildDualAxesChart(s3_data_array, metric3.name, metric3.unit, '#0D5E87', "column",
+                discharge_data_array, metric_discharge.name, metric_discharge.unit, "#0092B0", "line",
+                "chart3", name + " " + metric3.name + " and " + metric_discharge.name, "<i>*TP: Total phosphorus</i>",
+                ES.xAxis_start, ES.targets[name][metric3.name], null, //ES.targets[name][metric2.name],
+                (window.innerHeight  - $("#narrative-section").height()) * 0.7
+            );
+        }else{
+            $("#chart3").html("<i>* Data under development.</i>");
+        }
+
+        if(!s4_data_array.every(IS_EMPTY)){
+            var chart4 = BA.buildSingleChart("line", s4_data_array, metric4.name, metric4.unit, '#0D5E87',
+                ES.xAxis_start, name + " " + metric4.name, "<i>*TP: Total phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
+                ES.targets[name][metric4.name], "chart4", (window.innerHeight  - $("#narrative-section").height()) * 0.7
+            );
+        }else{
+            $("#chart4").html("<i>* Data under development.</i>");
+        }
+    }
+
+    function renderWatershed(label) {
+        srp_watershed_combined.query().where("MergeNm='" + label + "'").simplify(map, 0.5).run(function (error, featureCollection) {
+            if (featureCollection.features.length > 0) {
+                $("#intro").css("visibility", "hidden");
+                $(".tab").css("display", "block");
+                document.getElementById("defaultOpen").click();
+                for (var i = 0; i < featureCollection.features.length; i++) {
+                    selectedFeature = L.geoJSON(featureCollection.features[i]);
+                    selectedFeature.setStyle({
+                        fill: false,
+                        weight: 4,
+                        color: "#E07000"
+                    });
+                    selectedFeature.addTo(map);
+                }
+            }
+        });
+    }
+
+    function openFractionChart(evt, fraction) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+            tablinks[i].id = "";
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(fraction).style.display = "block";
+        evt.currentTarget.className += " active";
+
+        // Maintain current tab open
+        evt.currentTarget.id = "defaultOpen";
+    }
+</script>
+</body>
+</html>
