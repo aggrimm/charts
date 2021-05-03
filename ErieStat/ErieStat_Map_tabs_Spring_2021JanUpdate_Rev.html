@@ -258,7 +258,7 @@
         if(!s2_data_array.every(IS_EMPTY)){
             var chart2 = BA.buildSingleChart("line", s2_data_array, metric2.name, metric2.unit, '#0D5E87',
                 ES.xAxis_start, name + " " + metric2.name, "<i>*SRP: Soluble reactive phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
-                ES.targets[name][metric2.name], "chart2", (window.innerHeight  - $("#narrative-section").height()) * 0.7, legend: {symbolHeight: 11, symbolWidth: 11, symbolRadius: 0}
+                ES.targets[name][metric2.name], "chart2", (window.innerHeight  - $("#narrative-section").height()) * 0.7
             );
         }
         else {
