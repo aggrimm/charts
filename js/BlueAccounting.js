@@ -132,7 +132,11 @@ function BlueAccounting(){
             title: {
                 text: title,
                 margin: 20,
-                widthAdjust: -100
+                widthAdjust: -100,
+                style: {
+                    color: '#000000',
+                    fontWeight: 'bold'
+                }
             },
             subtitle: {
                 text: subtitle
@@ -232,7 +236,8 @@ function BlueAccounting(){
                 margin: 20,
                 widthAdjust: -100,
                 style: {
-                    color: this.ColorPicker.body
+                    color: this.ColorPicker.body,
+                    fontWeight: 'bold'
                 }
             },
             subtitle: {
@@ -377,7 +382,11 @@ function BlueAccounting(){
             title: {
                 text: title,
                 margin: 20,
-                widthAdjust: -100
+                widthAdjust: -100,
+                style: {
+                    color: this.ColorPicker.body,
+                    fontWeight: 'bold'
+                }
             },
 
             xAxis: {
