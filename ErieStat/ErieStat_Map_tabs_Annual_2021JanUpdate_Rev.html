@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Annual TP Loading in ErieStat Watersheds</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <script src="https://leaflet.github.io/Leaflet.label/leaflet.label.js"></script>
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+            integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
+            crossorigin=""></script>
+    <script src="//code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <!--<script src="https://code.highcharts.com/modules/export-data.js"></script> this module is not behaving as expected-->
+
+    <script src="../js/BlueAccounting.js"></script>
+    <script src="../js/ErieStat_2019.js"></script>
+    <script src="../js/export-csv_glc.js"></script>
+
+    <link rel="stylesheet" href="../css/BA_Style.css">
+
+</head>
+<body>
+<style>
+  .label {
+    font-weight: 700;
+    /* text-transform: uppercase; */
+    text-align: center;
+    margin-top: -1em;
+    font-size: 11px;
+    opacity: 0.5;
+  }
+
+  .label div {
+    position: relative;
+    left: -50%;
+    top: 10px;
+    /* text-shadow: 0px 2px 1px rgba(255,255,255,0.85); */
+  }
+
+</style>
+<div>
+    <div id="map"></div>
+    <div class="vl"></div>
+    <div id="right-panel">
+        <div id="intro"></div>
+        <div id="narrative-section">
+            <p id="narrative-caption"></p>
+            <p id="narrative-content"></p>
+        </div>
+        <!-- Tab links -->
+        <div class="tab">
+            <button class="tablinks" onclick="openFractionChart(event, 'TP')" id="defaultOpen">Annual TP Loading<!-- and<br> Annual Discharge--></button>
+            <!--<button class="tablinks" onclick="openFractionChart(event, 'FWMC')">Annual TP FWMC</button>-->
+        </div>
+
+        <!-- Tab content -->
+        <div id="TP" class="tabcontent">
+            <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+            <div id="chart1" class="charts"></div>
+        </div>
+
+        <!--<div id="FWMC" class="tabcontent">-->
+            <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+            <!--<div>-->
+                <!--<div id="chart2"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>
+
+
+<script>
+    var data;
+    var serviceURL = "https://services7.arcgis.com/Tk0IbKIKhaoYn5sa/arcgis/rest/services/ErieStat_AnnualTP_Map_Nov2020_WFL1/FeatureServer";
+    var BA = new BlueAccounting();
+    var ES = new ErieStat();
+    var initWatershed = 'Maumee';
+    var metric1 = ES.metrics.TP_L;
+    var metric2 = ES.metrics.Discharge;
+    var selectedFeature;
+
+    const IS_EMPTY = (val) => val == "";
+
+    var map = L.map("map").setView([42.1, -82.0], 7);
+    L.esri.basemapLayer("Topographic").addTo(map);
+
+    var tp_watershed_individual = L.esri.featureLayer({
+        url: serviceURL + "/2",
+        simplifyFactor: 0.7,
+        weight: 1,
+        style: {
+            color: "#93866E",
+            fillColor: "#FFC461",
+            fillOpacity: 0.5,
+        }
+    }).addTo(map);
+
+    var tp_watershed_combined = L.esri.featureLayer({
+        url: serviceURL + "/1",
+        opacity: 0.5,
+        simplifyFactor: 0.7,
+        weight: 2,
+        style: {
+            color: "#80735D",
+            fillColor: "#FFC461",
+            fillOpacity: 0
+        }
+    }).addTo(map);
+
+    var watersheds = L.esri.featureLayer({
+        url: serviceURL + "/0",
+        opacity: 0.7,
+        simplifyFactor: 0.7,
+        weight: 2,
+        style: {
+            color: "#80735D",
+            fill: false,
+        }
+    }).addTo(map);
+
+    // var labels = {};
+
+    tp_watershed_combined.on('createfeature', function (e) {
+      var id = e.feature.id;
+      var feature = tp_watershed_combined.getFeature(id);
+      var center = feature.getBounds().getCenter();
+      if (e.feature.properties.Label === 'Portage River'){
+          center.lat += 0.0;
+          center.lng -= 0.5;
+      }
+      // var label = L.marker(center, {
+      //   icon: L.divIcon({
+      //     iconSize: null,
+      //     className: 'label',
+      //     html: '<span>' + e.feature.properties.Label + '</span>'
+      //   })
+      // }).addTo(map);
+      labels[id] = label;
+    });
+
+    tp_watershed_combined.on('addfeature', function (e){
+      var label = labels[e.feature.id];
+      if (label){
+        label.addTo(map);
+      }
+    });
+
+    var tabs = document.getElementsByClassName("tab");
+    for (i = 0; i < tabs.length; i++) {
+        tabs[i].style.display = "none";
+    }
+
+    $.getJSON("../data/ErieStat_2020.json", function(d){
+        data = d;
+    }).done(function () {
+        ES.init(data);
+    }).then(function () {
+        L.esri.featureLayer({
+            url: "https://services7.arcgis.com/Tk0IbKIKhaoYn5sa/arcgis/rest/services/ErieStat_Monitoring/FeatureServer/0",
+            where: "ANNUAL = 'Y'",
+            pointToLayer: function (geojson, latlng) {
+                var p = L.circle(latlng, {
+                    radius: 500,
+                    color: "#A80084"
+                });
+
+                p.bindPopup("<table>" +
+                    //                    "<tr><th>Program: </th><td>{{geojson.properties.Program}}</td></tr>" +
+                    "<tr><th>Monitoring Station: </th><td>" + geojson.properties.Station + "</td></tr>" +
+                    "</table>");
+                return p;
+            }
+        }).addTo(map);
+
+        ES.buildNarratives(initWatershed + ' River');
+        loadChart(initWatershed + " River");
+        renderWatershed(initWatershed);
+    });
+
+    map.on("click", function (e){
+
+        tp_watershed_combined.query().nearby(e.latlng, 100).simplify(map, 0.5).run(function (error, featureCollection){
+            if(featureCollection.features.length >0){
+                $("#intro").css("visibility", "hidden");
+                $(".tab").css("display", "block");
+                document.getElementById("defaultOpen").click();
+                if (featureCollection.features.length > 0) {
+                    var name = ES.watershedNames[featureCollection.features[0].properties["MergeNm"]];
+                    // var label = featureCollection.features[0].properties["Label"];
+                    if (ES.buildNarratives(name)) {
+                        loadChart(name);
+                    } else {
+                        $(".charts").html("");
+                    }
+                    renderWatershed(featureCollection.features[0].properties["MergeNm"]);
+                }
+            }
+        })
+
+    });
+
+    function loadChart(name) {
+        function dataToArray(vals){
+            let array = []
+            for(let i =0;i < vals.length;i++){array.push(vals.get(i))}
+            return array;
+        }
+
+        var s1_data = ES.getWatershedData(name, metric1.name);
+//                        var s2_data = ES.getWatershedData(name, metric2.name);
+        var s1_data_array = dataToArray(s1_data);
+
+        if(!s1_data_array.every(IS_EMPTY)){
+            var chart1 = BA.buildSingleChart("column", s1_data_array, metric1.name, metric1.unit, BA.ColorPicker.blue7,
+                ES.xAxis_start, name + " " + metric1.name, "<i>*TP: Total phosphorus</i>", 
+                'Chart displays the annual total phosphorus loading, or TP, to Lake Erie for the selected watershed for the years 2008 to 2019. A target line on the chart marks the annual TP loading target for the watershed.',
+                ES.targets[name][metric1.name], "chart1",
+                '<b>Source: </b><em>Great Lakes Commission, Blue Accounting, 2020, <a href="https://www.blueaccounting.org/progress/phosphorus-targets">https://www.blueaccounting.org/progress/phosphorus-targets</a> <br /> Data is provided to ErieStat through the GLWQA Annex 4 subcommittee</em>',
+                (window.innerHeight - $("#narrative-section").height()) * 0.75
+            );
+        }else{
+            $("#chart1").html("<i>* Data under development.</i>");
+        }
+    }
+
+    function renderWatershed(name) {
+        tp_watershed_combined.query().where("MergeNm='" + name + "'").simplify(map, 0.5).run(function (error, featureCollection) {
+            if (featureCollection.features.length > 0) {
+                $("#intro").css("visibility", "hidden");
+                $(".tab").css("display", "block");
+                document.getElementById("defaultOpen").click();
+                if(selectedFeature){
+                    map.removeLayer(selectedFeature);
+                }
+                // for (var i = 0; i < featureCollection.features.length; i++) {
+                selectedFeature = L.geoJSON(featureCollection.features[0]);
+                selectedFeature.setStyle({
+                    fillColor: "#E07000",
+                    weight: 4,
+                    opacity: 1,
+                    color: "#2C2C2C"
+                });
+                selectedFeature.addTo(map);
+                // }
+            }
+        });
+    }
+
+    function openFractionChart(evt, fraction) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+            tablinks[i].id = "";
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(fraction).style.display = "block";
+        evt.currentTarget.className += " active";
+
+        // Maintain current tab open
+        evt.currentTarget.id = "defaultOpen";
+    }
+
+</script>
+</body>
+</html>
