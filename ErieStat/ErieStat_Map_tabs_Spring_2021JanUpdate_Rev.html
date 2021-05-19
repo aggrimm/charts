@@ -205,9 +205,7 @@
 
 
     map.on("click", function (e){
-        if(selectedFeature){
-            map.removeLayer(selectedFeature);
-        }
+
         srp_watershed_combined.query().nearby(e.latlng, 100).simplify(map, 0.5).run(function (error, featureCollection){
             if(featureCollection.features.length >0){
                 $("#intro").css("visibility", "hidden");
@@ -304,6 +302,9 @@
                 $("#intro").css("visibility", "hidden");
                 $(".tab").css("display", "block");
                 document.getElementById("defaultOpen").click();
+                if(selectedFeature){
+                    map.removeLayer(selectedFeature);
+                }
                 for (var i = 0; i < featureCollection.features.length; i++) {
                     selectedFeature = L.geoJSON(featureCollection.features[i]);
                     selectedFeature.setStyle({
