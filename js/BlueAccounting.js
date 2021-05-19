@@ -273,7 +273,6 @@ function BlueAccounting(){
                     }
                 }]
             },
-            dashStyle: lineStyle
             }, { // Secondary yAxis
                 title: {
                     text: seriesUnit2 ? seriesName2 + "<br>(" + seriesUnit2 + ")" : seriesUnit2,
