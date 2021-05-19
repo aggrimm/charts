@@ -137,7 +137,6 @@ function BlueAccounting(){
                     fontWeight: 'bold'
                 }
             },
-            },
             subtitle: {
                 text: subtitle
             },
