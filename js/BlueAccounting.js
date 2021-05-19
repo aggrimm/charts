@@ -168,7 +168,7 @@ function BlueAccounting(){
 
     this.buildDualAxesChart = function (series1, seriesName1, seriesUnit1, color1, chartType1,
                                         series2, seriesName2, seriesUnit2, color2, chartType2,
-                                        tag, title, subtitle, startingYear, target1, target2, height, width, xAxis_title) {
+                                        tag, title, subtitle, description, startingYear, target1, target2, height, width, xAxis_title) {
         var chart;
         if (!series1) {
             seriesName1 += " (not available)";
@@ -183,6 +183,9 @@ function BlueAccounting(){
                 width: width,
                 style: {
                     color: this.ColorPicker.body
+                },
+                accessibility: { 
+                    description 
                 },
                 events: {
                     load: function () {
