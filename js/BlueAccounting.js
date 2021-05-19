@@ -130,7 +130,8 @@ function BlueAccounting(){
                 enabled: true
             },
             title: {
-                text: title
+                text: title,
+                widthAdjust: -100
             },
             subtitle: {
                 text: subtitle
@@ -227,6 +228,7 @@ function BlueAccounting(){
             },
             title: {
                 text: title,
+                widthAdjust: -100,
                 style: {
                     color: this.ColorPicker.body
                 }
@@ -370,7 +372,8 @@ function BlueAccounting(){
                 enabled: true
             },
             title: {
-                text: title
+                text: title,
+                widthAdjust: -100
             },
 
             xAxis: {
