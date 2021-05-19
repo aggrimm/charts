@@ -214,9 +214,10 @@
 
 
     map.on("click", function (e){
-        if(selectedFeature){
-            map.removeLayer(selectedFeature);
+        if (this.map.getLayer (selectedFeature)) {
+            this.map.removeLayer (this.map.getLayer (selectedFeature));
         }
+
         srp_watershed_combined.query().nearby(e.latlng, 100).simplify(map, 0.5).run(function (error, featureCollection){
             if(featureCollection.features.length >0){
                 $("#intro").css("visibility", "hidden");
