@@ -249,7 +249,7 @@
         if(!s1_data_array.every(IS_EMPTY) || !discharge_data_array.every(IS_EMPTY)){
             var chart1 = BA.buildDualAxesChart(s1_data_array, metric1.name, metric1.unit, '#0D5E87', "column",
                 discharge_data_array, metric_discharge.name, metric_discharge.unit, "#0092B0", "line",
-                "chart1", name + " " + metric1.name + " and " + metric_discharge.name, "<i>*SRP: Soluble reactive phosphorus</i>",
+                "chart1", "<b>" + name + " " + metric1.name + " and " + metric_discharge.name + "</b>", "<i>*SRP: Soluble reactive phosphorus</i>",
                 'Chart displays two datasets, spring discharge and spring soluble reactive phosphorus loading, to the Western Basin of Lake Erie for the selected watershed for the years 2008 to 2019. A target line on the chart marks the spring SRP loading target for the watershed.',
                 ES.xAxis_start, ES.targets[name][metric1.name], null, //ES.targets[name][metric2.name],
                 (window.innerHeight  - $("#narrative-section").height()) * 0.7
@@ -260,7 +260,7 @@
 
         if(!s2_data_array.every(IS_EMPTY)){
             var chart2 = BA.buildSingleChart("line", s2_data_array, metric2.name, metric2.unit, '#0D5E87',
-                ES.xAxis_start, name + " " + metric2.name, "<i>*SRP: Soluble reactive phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
+                ES.xAxis_start,  "<b>" + name + " " + metric2.name + "</b>", "<i>*SRP: Soluble reactive phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
                 'Chart displays the flow-weighted mean concentration of soluble reactive phosphorus loading, or SRP, to the Western Basin of Lake Erie for the selected watershed for the years 2008 to 2019. A target line on the chart marks the spring SRP FWMC target for the watershed.',
                 ES.targets[name][metric2.name], "chart2", (window.innerHeight  - $("#narrative-section").height()) * 0.7
             );
@@ -272,7 +272,7 @@
         if(!s3_data_array.every(IS_EMPTY) || !discharge_data_array.every(IS_EMPTY)){
             var chart3 = BA.buildDualAxesChart(s3_data_array, metric3.name, metric3.unit, '#0D5E87', "column",
                 discharge_data_array, metric_discharge.name, metric_discharge.unit, "#0092B0", "line",
-                "chart3", name + " " + metric3.name + " and " + metric_discharge.name, "<i>*TP: Total phosphorus</i>",
+                "chart3",  "<b>" + name + " " + metric3.name + " and " + metric_discharge.name + "</b>", "<i>*TP: Total phosphorus</i>",
                 'Chart displays two datasets, spring discharge and spring total phosphorus loading, to the Western Basin of Lake Erie for the selected watershed for the years 2008 to 2019. A target line on the chart marks the spring TP loading target for the watershed.',
                 ES.xAxis_start, ES.targets[name][metric3.name], null, //ES.targets[name][metric2.name],
                 (window.innerHeight  - $("#narrative-section").height()) * 0.7
