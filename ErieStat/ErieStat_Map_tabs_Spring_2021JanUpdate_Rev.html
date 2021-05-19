@@ -283,7 +283,7 @@
 
         if(!s4_data_array.every(IS_EMPTY)){
             var chart4 = BA.buildSingleChart("line", s4_data_array, metric4.name, metric4.unit, '#0D5E87',
-                ES.xAxis_start, name + " " + metric4.name, "<i>*TP: Total phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
+                ES.xAxis_start, "<b>" + name + " " + metric4.name + "</b>", "<i>*TP: Total phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
                 'Chart displays the flow-weighted mean concentration of total phosphorus loading, or TP, to the Western Basin of Lake Erie for the selected watershed for the years 2008 to 2019. A target line on the chart marks the spring TP FWMC target for the watershed.',
                 ES.targets[name][metric4.name], "chart4", (window.innerHeight  - $("#narrative-section").height()) * 0.7
             );
