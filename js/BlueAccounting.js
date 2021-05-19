@@ -92,7 +92,7 @@ function BlueAccounting(){
                     load: function () {
                         var logoX = 15;
                         var size = this.plotBox.y;
-                        size -= 20;
+                        size -= 40;
 
                         if(this.chartWidth < 500){
                             logoX = 10;
@@ -195,7 +195,7 @@ function BlueAccounting(){
                     load: function () {
                         var logoX = 15;
                         var size = this.plotBox.y;
-                        size -= 20;
+                        size -= 40;
 
                         if(this.chartWidth < 500){
                             logoX = 10;
@@ -320,7 +320,8 @@ function BlueAccounting(){
                 events: {
                     load: function () {
                         var logoX = 15;
-                        var size = this.plotBox.y - 20;
+                        var size = this.plotBox.y;
+                        size -= 40;
 
                         if(this.chartWidth < 500){
                             logoX = 10;
