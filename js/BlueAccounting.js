@@ -92,7 +92,7 @@ function BlueAccounting(){
                     load: function () {
                         var logoX = 15;
                         var size = this.plotBox.y;
-                        size -= 5;
+                        size -= 40;
 
                         if(this.chartWidth < 500){
                             logoX = 10;
@@ -130,7 +130,13 @@ function BlueAccounting(){
                 enabled: true
             },
             title: {
-                text: title
+                text: title,
+                margin: 20,
+                widthAdjust: -370,
+                style: {
+                    fontWeight: 'bold'
+                }
+            },
             },
             subtitle: {
                 text: subtitle
@@ -194,7 +200,7 @@ function BlueAccounting(){
                     load: function () {
                         var logoX = 15;
                         var size = this.plotBox.y;
-                        size -= 5;
+                        size -= 40;
 
                         if(this.chartWidth < 500){
                             logoX = 10;
@@ -227,7 +233,10 @@ function BlueAccounting(){
             },
             title: {
                 text: title,
+                margin: 20,
+                widthAdjust: -370,
                 style: {
+                    fontWeight: 'bold',
                     color: this.ColorPicker.body
                 }
             },
@@ -318,7 +327,7 @@ function BlueAccounting(){
                 events: {
                     load: function () {
                         var logoX = 15;
-                        var size = this.plotBox.y - 5;
+                        var size = this.plotBox.y - 40;
 
                         if(this.chartWidth < 500){
                             logoX = 10;
@@ -370,7 +379,12 @@ function BlueAccounting(){
                 enabled: true
             },
             title: {
-                text: title
+                text: title,
+                margin: 20,
+                widthAdjust: -370,
+                style: {
+                    fontWeight: 'bold'
+                }
             },
 
             xAxis: {
