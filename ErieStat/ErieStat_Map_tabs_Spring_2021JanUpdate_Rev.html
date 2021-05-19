@@ -110,46 +110,37 @@
 
     const IS_EMPTY = (val) => val == "";
     
-    map.createPane('watersheds_ind');
-
     var srp_watershed_individual = L.esri.featureLayer({
         url: serviceURL + "/2",
-        pane: 'watersheds_ind',
         simplifyFactor: 0.7,
         weight: 1,
         style: {
             color: "#93866E",
-            fillColor: "#0D5E87",
-            fillOpacity: 0.6,
+            fillColor: "#6DB227",
+            fillOpacity: 0.8,
         }
     }).addTo(map);
-    
-    map.createPane('WBLE_watershed');
-
-    var watersheds = L.esri.featureLayer({
-        url: serviceURL + "/0",
-        pane: 'WBLE_watershed',
-        opacity: 0.7,
-        simplifyFactor: 0.7,
-        weight: 2,
-        style: {
-            color: "#2C2C2C",
-            fill: false,
-        }
-    }).addTo(map);
-
-    map.createPane('watersheds_comb');
 
     var srp_watershed_combined = L.esri.featureLayer({
         url: serviceURL + "/1",
-        pane: 'watersheds_comb',
         opacity: 0.5,
         simplifyFactor: 0.7,
         weight: 2,
         style: {
             color: "#80735D",
-            fillColor: "#0D5E87",
+            fillColor: "#000000",
             fillOpacity: 0
+        }
+    }).addTo(map);
+
+    var watersheds = L.esri.featureLayer({
+        url: serviceURL + "/0",
+        opacity: 0.7,
+        simplifyFactor: 0.7,
+        weight: 2,
+        style: {
+            color: "#000000",
+            fill: false,
         }
     }).addTo(map);
     
