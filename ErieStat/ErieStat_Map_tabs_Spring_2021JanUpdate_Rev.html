@@ -109,9 +109,12 @@
     L.esri.basemapLayer("Topographic").addTo(map);
 
     const IS_EMPTY = (val) => val == "";
+    
+    map.createPane('watersheds_ind');
 
     var srp_watershed_individual = L.esri.featureLayer({
         url: serviceURL + "/2",
+        pane: 'watersheds_ind',
         simplifyFactor: 0.7,
         weight: 1,
         style: {
@@ -120,9 +123,12 @@
             fillOpacity: 0.6,
         }
     }).addTo(map);
+    
+    map.createPane('watersheds_comb');
 
     var srp_watershed_combined = L.esri.featureLayer({
         url: serviceURL + "/1",
+        pane: 'watersheds_comb',
         opacity: 0.5,
         simplifyFactor: 0.7,
         weight: 2,
@@ -132,9 +138,12 @@
             fillOpacity: 0
         }
     }).addTo(map);
+    
+    map.createPane('WBLE_watershed');
 
     var watersheds = L.esri.featureLayer({
         url: serviceURL + "/0",
+        pane: 'WBLE_watershed',
         opacity: 0.7,
         simplifyFactor: 0.7,
         weight: 2,
