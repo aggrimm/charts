@@ -262,17 +262,7 @@ function BlueAccounting(){
                     style: {
                         color: color1
                     }
-                },
-                plotLines: [{
-                    color: '#E07000',
-                    width: 3,
-                    value: target1,
-                    label: {
-                        text: 'Target: ' + target1,
-                        align: 'right',
-                    }
-                }]
-            },
+                }
             }, { // Secondary yAxis
                 title: {
                     text: seriesUnit2 ? seriesName2 + "<br>(" + seriesUnit2 + ")" : seriesUnit2,
@@ -310,7 +300,12 @@ function BlueAccounting(){
             }]
         });
 
-
+        if (target1) {
+            this.addTargetLine(chart, target1, seriesName1 + " Target");
+        }
+        if (target2) {
+            this.addTargetLine(chart, target2, seriesName2 + " Target", "shortdot");
+        }
 
         return chart;
     };
