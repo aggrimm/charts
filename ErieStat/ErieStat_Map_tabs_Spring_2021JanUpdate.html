@@ -200,8 +200,11 @@
 
     map.on("click", function (e){
         if(selectedFeature){
-            map.removeLayer(selectedFeature);
+            removeAllLayers();
         }
+        function removeAllLayers() {
+            active.clearLayers();
+        };
         srp_watershed_combined.query().nearby(e.latlng, 100).simplify(map, 0.5).run(function (error, featureCollection){
             if(featureCollection.features.length >0){
                 $("#intro").css("visibility", "hidden");
@@ -295,8 +298,9 @@
                         weight: 4,
                         color: "#F3A51E"
                     });
-                    selectedFeature.addTo(map);
+                    selectedFeature.addTo(active);                    
                 }
+                active.addTo(map);
             }
         });
     }
