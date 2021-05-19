@@ -163,7 +163,8 @@ function BlueAccounting(){
             plotOptions: {
                 series: {
                     pointStart: startingYear
-                }
+                },
+                groupPadding: 0.1,
             },
             series: [
                 {
