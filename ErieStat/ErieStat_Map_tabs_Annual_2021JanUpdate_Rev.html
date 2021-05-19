@@ -171,6 +171,7 @@
             pointToLayer: function (geojson, latlng) {
                 var p = L.circle(latlng, {
                     radius: 500,
+                    opacity: 0,
                     color: "#A80084"
                 });
 
@@ -221,7 +222,7 @@
         var s1_data_array = dataToArray(s1_data);
 
         if(!s1_data_array.every(IS_EMPTY)){
-            var chart1 = BA.buildSingleChart("column", s1_data_array, metric1.name, metric1.unit, BA.ColorPicker.blue7,
+            var chart1 = BA.buildSingleChart("column", s1_data_array, metric1.name, metric1.unit, '#0D5E87',
                 ES.xAxis_start, name + " " + metric1.name, "<i>*TP: Total phosphorus</i>", 
                 'Chart displays the annual total phosphorus loading, or TP, to Lake Erie for the selected watershed for the years 2008 to 2019. A target line on the chart marks the annual TP loading target for the watershed.',
                 ES.targets[name][metric1.name], "chart1",
