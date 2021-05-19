@@ -131,6 +131,7 @@ function BlueAccounting(){
             },
             title: {
                 text: title,
+                margin: 20,
                 widthAdjust: -100
             },
             subtitle: {
@@ -228,6 +229,7 @@ function BlueAccounting(){
             },
             title: {
                 text: title,
+                margin: 20,
                 widthAdjust: -100,
                 style: {
                     color: this.ColorPicker.body
@@ -374,6 +376,7 @@ function BlueAccounting(){
             },
             title: {
                 text: title,
+                margin: 20,
                 widthAdjust: -100
             },
 
