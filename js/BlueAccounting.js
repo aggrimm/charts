@@ -295,7 +295,7 @@ function BlueAccounting(){
             type: 'line',
             data: targetSeries,
             name: targetTitle ,
-            color: #E07000,
+            color: '#E07000',
             lineWidth: 3,
             marker: {
                 radius: 0
