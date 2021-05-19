@@ -75,7 +75,7 @@ function BlueAccounting(){
 
     this.SourceWater = {};
 
-    this.buildSingleChart = function (type, series, seriesName, seriesUnit, color, startingYear, title, subtitle, target, tag, height, width, xAxis_title) {
+    this.buildSingleChart = function (type, series, seriesName, seriesUnit, color, startingYear, title, subtitle, desc, target, tag, height, width, xAxis_title) {
         var chart = Highcharts.chart(tag, {
             chart: {
                 background: "transparent",
@@ -84,6 +84,9 @@ function BlueAccounting(){
                 height: height,
                 style: {
                     color: this.ColorPicker.body
+                },
+                accessibility: { 
+                    description: desc 
                 },
                 events: {
                     load: function () {
@@ -168,7 +171,7 @@ function BlueAccounting(){
 
     this.buildDualAxesChart = function (series1, seriesName1, seriesUnit1, color1, chartType1,
                                         series2, seriesName2, seriesUnit2, color2, chartType2,
-                                        tag, title, subtitle, description, startingYear, target1, target2, height, width, xAxis_title) {
+                                        tag, title, subtitle, desc, startingYear, target1, target2, height, width, xAxis_title) {
         var chart;
         if (!series1) {
             seriesName1 += " (not available)";
@@ -185,7 +188,7 @@ function BlueAccounting(){
                     color: this.ColorPicker.body
                 },
                 accessibility: { 
-                    description 
+                    description: desc 
                 },
                 events: {
                     load: function () {
