@@ -308,11 +308,10 @@
                 for (var i = 0; i < featureCollection.features.length; i++) {
                     selectedFeature = L.geoJSON(featureCollection.features[i]);
                     selectedFeature.setStyle({
-                        opacity: 1, 
-                        color: "2C2C2C",
+                        fill: false,
                         weight: 4,
-                        fill = false,
-                                                
+                        opacity: 1,
+                        color: "#F3d655"
                     });
                     selectedFeature.addTo(map);
                 }
