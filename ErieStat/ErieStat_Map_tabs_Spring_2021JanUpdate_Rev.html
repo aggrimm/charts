@@ -252,6 +252,7 @@
                 "chart1", "<b>" + name + " " + metric1.name + " and " + metric_discharge.name + "</b>", "<i>*SRP: Soluble reactive phosphorus</i>",
                 'Chart displays two datasets, spring discharge and spring soluble reactive phosphorus loading, to the Western Basin of Lake Erie for the selected watershed for the years 2008 to 2019. A target line on the chart marks the spring SRP loading target for the watershed.',
                 ES.xAxis_start, ES.targets[name][metric1.name], null, //ES.targets[name][metric2.name],
+                '<b>Source: </b><em>Great Lakes Commission, Blue Accounting, 2020, <a href="https://www.blueaccounting.org/progress/phosphorus-targets">https://www.blueaccounting.org/progress/phosphorus-targets</a> <br /> Data is provided to ErieStat through the GLWQA Annex 4 subcommittee</em>',
                 (window.innerHeight  - $("#narrative-section").height()) * 0.7
             );
         }else{
@@ -262,7 +263,9 @@
             var chart2 = BA.buildSingleChart("line", s2_data_array, metric2.name, metric2.unit, '#0D5E87',
                 ES.xAxis_start,  "<b>" + name + " " + metric2.name + "</b>", "<i>*SRP: Soluble reactive phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
                 'Chart displays the flow-weighted mean concentration of soluble reactive phosphorus loading, or SRP, to the Western Basin of Lake Erie for the selected watershed for the years 2008 to 2019. A target line on the chart marks the spring SRP FWMC target for the watershed.',
-                ES.targets[name][metric2.name], "chart2", (window.innerHeight  - $("#narrative-section").height()) * 0.7
+                ES.targets[name][metric2.name], "chart2", 
+                '<b>Source: </b><em>Great Lakes Commission, Blue Accounting, 2020, <a href="https://www.blueaccounting.org/progress/phosphorus-targets">https://www.blueaccounting.org/progress/phosphorus-targets</a> <br /> Data is provided to ErieStat through the GLWQA Annex 4 subcommittee</em>',
+                (window.innerHeight  - $("#narrative-section").height()) * 0.7
             );
         }
         else {
@@ -275,6 +278,7 @@
                 "chart3",  "<b>" + name + " " + metric3.name + " and " + metric_discharge.name + "</b>", "<i>*TP: Total phosphorus</i>",
                 'Chart displays two datasets, spring discharge and spring total phosphorus loading, to the Western Basin of Lake Erie for the selected watershed for the years 2008 to 2019. A target line on the chart marks the spring TP loading target for the watershed.',
                 ES.xAxis_start, ES.targets[name][metric3.name], null, //ES.targets[name][metric2.name],
+                '<b>Source: </b><em>Great Lakes Commission, Blue Accounting, 2020, <a href="https://www.blueaccounting.org/progress/phosphorus-targets">https://www.blueaccounting.org/progress/phosphorus-targets</a> <br /> Data is provided to ErieStat through the GLWQA Annex 4 subcommittee</em>',
                 (window.innerHeight  - $("#narrative-section").height()) * 0.7
             );
         }else{
@@ -285,7 +289,9 @@
             var chart4 = BA.buildSingleChart("line", s4_data_array, metric4.name, metric4.unit, '#0D5E87',
                 ES.xAxis_start, "<b>" + name + " " + metric4.name + "</b>", "<i>*TP: Total phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
                 'Chart displays the flow-weighted mean concentration of total phosphorus loading, or TP, to the Western Basin of Lake Erie for the selected watershed for the years 2008 to 2019. A target line on the chart marks the spring TP FWMC target for the watershed.',
-                ES.targets[name][metric4.name], "chart4", (window.innerHeight  - $("#narrative-section").height()) * 0.7
+                ES.targets[name][metric4.name], "chart4", 
+                '<b>Source: </b><em>Great Lakes Commission, Blue Accounting, 2020, <a href="https://www.blueaccounting.org/progress/phosphorus-targets">https://www.blueaccounting.org/progress/phosphorus-targets</a> <br /> Data is provided to ErieStat through the GLWQA Annex 4 subcommittee</em>',
+                (window.innerHeight  - $("#narrative-section").height()) * 0.7
             );
         }else{
             $("#chart4").html("<i>* Data under development.</i>");
