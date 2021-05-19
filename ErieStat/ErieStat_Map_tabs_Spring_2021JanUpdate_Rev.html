@@ -14,7 +14,7 @@
             crossorigin=""></script>
     <!-- script src="https://leaflet.github.io/Leaflet.label/leaflet.label.js"></script> -->
     <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+    <script src="https://unpkg.com/esri-leaflet@3.0.1/dist/esri-leaflet.js"
             integrity="sha512-JmpptMCcCg+Rd6x0Dbg6w+mmyzs1M7chHCd9W8HPovnImG2nLAQWn3yltwxXRM7WjKKFFHOAKjjF2SC4CgiFBg=="
             crossorigin=""></script>
     <script src="//code.highcharts.com/highcharts.js"></script>
@@ -215,7 +215,7 @@
 
     map.on("click", function (e){
         if(selectedFeature){
-            map.remove(selectedFeature);
+            map.removeLayer(selectedFeature);
         }
         srp_watershed_combined.query().nearby(e.latlng, 100).simplify(map, 0.5).run(function (error, featureCollection){
             if(featureCollection.features.length >0){
