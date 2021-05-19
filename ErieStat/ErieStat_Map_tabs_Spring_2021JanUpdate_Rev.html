@@ -113,11 +113,11 @@
     var srp_watershed_individual = L.esri.featureLayer({
         url: serviceURL + "/2",
         simplifyFactor: 0.7,
-        weight: 0,
+        weight: 1,
         style: {
             color: "#93866E",
             fillColor: "#0D5E87",
-            fillOpacity: 0,
+            fillOpacity: 0.6,
         }
     }).addTo(map);
 
@@ -129,7 +129,7 @@
         style: {
             color: "#80735D",
             fillColor: "#0D5E87",
-            fillOpacity: 0.6
+            fillOpacity: 0
         }
     }).addTo(map);
 
