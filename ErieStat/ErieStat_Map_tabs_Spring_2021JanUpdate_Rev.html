@@ -14,8 +14,8 @@
             crossorigin=""></script>
     <!-- script src="https://leaflet.github.io/Leaflet.label/leaflet.label.js"></script> -->
     <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
-            integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
+    <script src="https://unpkg.com/esri-leaflet@3.0.1/dist/esri-leaflet.js"
+            integrity="sha512-JmpptMCcCg+Rd6x0Dbg6w+mmyzs1M7chHCd9W8HPovnImG2nLAQWn3yltwxXRM7WjKKFFHOAKjjF2SC4CgiFBg=="
             crossorigin=""></script>
     <script src="//code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -124,6 +124,20 @@
         }
     }).addTo(map);
     
+    map.createPane('WBLE_watershed');
+
+    var watersheds = L.esri.featureLayer({
+        url: serviceURL + "/0",
+        pane: 'WBLE_watershed',
+        opacity: 0.7,
+        simplifyFactor: 0.7,
+        weight: 2,
+        style: {
+            color: "#2C2C2C",
+            fill: false,
+        }
+    }).addTo(map);
+
     map.createPane('watersheds_comb');
 
     var srp_watershed_combined = L.esri.featureLayer({
@@ -139,20 +153,6 @@
         }
     }).addTo(map);
     
-    map.createPane('WBLE_watershed');
-
-    var watersheds = L.esri.featureLayer({
-        url: serviceURL + "/0",
-        pane: 'WBLE_watershed',
-        opacity: 0.7,
-        simplifyFactor: 0.7,
-        weight: 2,
-        style: {
-            color: "#2C2C2C",
-            fill: false,
-        }
-    }).addTo(map);
-
     var labels = {};
 
     srp_watershed_combined.on('createfeature', function (e) {
