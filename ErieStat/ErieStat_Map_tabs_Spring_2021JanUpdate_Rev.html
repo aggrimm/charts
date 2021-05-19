@@ -14,8 +14,8 @@
             crossorigin=""></script>
     <!-- script src="https://leaflet.github.io/Leaflet.label/leaflet.label.js"></script> -->
     <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet@3.0.1/dist/esri-leaflet.js"
-            integrity="sha512-JmpptMCcCg+Rd6x0Dbg6w+mmyzs1M7chHCd9W8HPovnImG2nLAQWn3yltwxXRM7WjKKFFHOAKjjF2SC4CgiFBg=="
+    <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+            integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
             crossorigin=""></script>
     <script src="//code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -109,15 +109,15 @@
     L.esri.basemapLayer("Topographic").addTo(map);
 
     const IS_EMPTY = (val) => val == "";
-    
+
     var srp_watershed_individual = L.esri.featureLayer({
         url: serviceURL + "/2",
         simplifyFactor: 0.7,
         weight: 1,
         style: {
             color: "#93866E",
-            fillColor: "#6DB227",
-            fillOpacity: 0.8,
+            fillColor: "#0D5E87",
+            fillOpacity: 0.6,
         }
     }).addTo(map);
 
@@ -128,7 +128,7 @@
         weight: 2,
         style: {
             color: "#80735D",
-            fillColor: "#000000",
+            fillColor: "#0D5E87",
             fillOpacity: 0
         }
     }).addTo(map);
@@ -139,11 +139,11 @@
         simplifyFactor: 0.7,
         weight: 2,
         style: {
-            color: "#000000",
+            color: "#2C2C2C",
             fill: false,
         }
     }).addTo(map);
-    
+
     var labels = {};
 
     srp_watershed_combined.on('createfeature', function (e) {
@@ -207,9 +207,7 @@
     map.on("click", function (e){
         if(selectedFeature){
             map.removeLayer(selectedFeature);
-            featureCollection.length = 0;
         }
-
         srp_watershed_combined.query().nearby(e.latlng, 100).simplify(map, 0.5).run(function (error, featureCollection){
             if(featureCollection.features.length >0){
                 $("#intro").css("visibility", "hidden");
