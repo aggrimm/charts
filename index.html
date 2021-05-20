@@ -98,28 +98,8 @@
     </div>
 
 
-    <h3>Maps and Charts (Coded with ESRI + Leaflet)</h3>
-    <div>
-        <a href="backups/ErieStat_Map_SRP_S_Discharge.html" target="_blank">Map + Spring SRP Loading_Spring Discharge</a>
-        <br>
-        <a href="backups/ErieStat_Map_tabs_Annual.html" target="_blank">Map + Charts in Tabs for Annual &#10004</a>
-        <br>
-        <a href="backups/ErieStat_Map_tabs_Spring.html" target="_blank">Map + Charts in Tabs for Spring &#10004</a>
-        <br>
-        <a href="backups/ErieStat/ErieStat_Map_tabs_Annual_v2_withPrintMap.html" target="_blank">Export Map as a PNG</a>
-        <br>
-    </div>
-    <!--<a href="ErieStat_MapChart_Leaflet.html" target="_blank">Chart with Map</a>-->
-    <!--<br>-->
 
 
-    <h3>Maps and Charts (Coded with ESRI alone)</h3>
-    <div>
-        <a href="backups/ErieStat_ArcGIS_AnnualTP.html" target="_blank">Annual TP Loading &#10004</a>
-        <br>
-        <!--<a href="ErieStat_ArcGIS_SpringSRP.html" target="_blank">Spring SRP Loading &#10004</a>-->
-        <!--<br>-->
-    </div>
 
 
     <h3>ArcGIS Online App</h3>
@@ -137,7 +117,7 @@
 
     <h3>&#x3Ciframe&#x3E Map with Chart</h3>
     <p>Width: 1440px; Height: 800px</p>
-    <iframe src="ErieStat/ErieStat_Map_tabs_Spring.html" height="800px" width="1440px" tyle="border: none"></iframe>
+    <iframe src="ErieStat/ErieStat_Map_tabs_Spring_2021JanUpdate_Rev.html" height="800px" width="1440px" tyle="border: none"></iframe>
     <!--<h3>Two &#x3Ciframe&#x3Es Side-by-Side</h3>-->
     <!--<iframe src="backups/Charts_SingleChart.html" height="400" width="600" style="border: none"></iframe>-->
     <!--<iframe src="backups/Charts_SingleChart.html" height="400" width="600" style="border: none"></iframe>-->
@@ -166,16 +146,17 @@
             <li><a href="js/SWI.js" target="_blank">JavaScript Library for Source Water Initiative</a></li>
             <li><a href="js/export-csv_glc.js" target="_blank">Customized Highcharts exporting</a></li>
         </ul>
-        <p>Accessible Esri Basemaps</p>
-        <u1>
+
+    </div>
+    
+    <h3>Accessible Esri Basemaps</h3>
+    <div>
+        <ul>
             <li><a href="https://arcgis-content.maps.arcgis.com/apps/mapviewer/index.html?webmap=1441ac1b158a40dba30e78cc4c4536cc" target="_blank">Light</a></li>
             <li><a href="https://arcgis-content.maps.arcgis.com/apps/mapviewer/index.html?webmap=f0dd3d23f4354ff79004d9d2ed6666fe" target="_blank">Dark</a></li>
             <li><a href="https://arcgis-content.maps.arcgis.com/apps/mapviewer/index.html?webmap=25f0400312ca450fbb78e165cf5784ad" target="_blank">Grayscale 1</a></li>
             <li><a href="https://arcgis-content.maps.arcgis.com/apps/mapviewer/index.html?webmap=64d70a0e9d4646fcacb5469dcf0e7634" target="_blank">Grayscale 2</a></li>
-
-
-
-
+        </ul>
     </div>
 
     <h3>CSS (Cascading Style Sheets)</h3>
@@ -231,7 +212,7 @@
                 y: 1
             }, {
                 name: '3.',
-                color: "#9FDB7F,
+                color: "#9FDB7F",
                 y: 1
             }, {
                 name: '4.',
@@ -268,7 +249,7 @@
     });
     Highcharts.chart("additional_color_wheel", {
         chart: {
-            plotBackgroundColor: BA.ColorPicker.blue4,
+            plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
             type: 'pie'
