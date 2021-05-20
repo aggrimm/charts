@@ -17,7 +17,9 @@
     <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
             integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
             crossorigin=""></script>
-    <script src="./esri-leaflet-vector.js"></script>
+    <script src="https://unpkg.com/esri-leaflet-vector@3.0.0/dist/esri-leaflet-vector.js"
+            integrity="sha512-i3LCZC/OnZR2VtZJ7ftXbZivyjPVBKeOqWuJ9SqaBnuiG18GyzTrHWYPgf1geE1LmI9yRENWSEI3jcpKx1dgqg=="
+            crossorigin=""></script>
     <script src="//code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -109,9 +111,9 @@
     var map = L.map("map").setView([42.1, -82.0], 7);
     <!--L.esri.basemapLayer("Topographic").addTo(map);-->    
  
-    L.esri.Vector.vectorTileLayer(
-        "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer"
-    ).addTo(map);
+    L.esri.Vector.vectorTileLayer("https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer", {
+        apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU",        
+    }).addTo(map);
  
 
     const IS_EMPTY = (val) => val == "";
