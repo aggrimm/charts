@@ -191,6 +191,8 @@
         tabs[i].style.display = "none";
     }
     
+    map.createPane('selected');
+    
     $.getJSON("../data/ErieStat_2020.json", function(d){
         data = d;
     }).done(function () {
@@ -323,7 +325,7 @@
                     map.removeLayer(selectedFeature);
                 }
                 for (var i = 0; i < featureCollection.features.length; i++) {
-                    selectedFeature = L.geoJSON(featureCollection.features[i]);
+                    selectedFeature = L.geoJSON(featureCollection.features[i], {pane: selected});
                     selectedFeature.setStyle({
                         fillColor: "#E07000",
                         weight: 4,
