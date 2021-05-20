@@ -109,17 +109,24 @@
     var selectedFeature;
 
     var map = L.map("map").setView([42.1, -82.0], 7);
+    
+    var gray1base = L.esri.Vector.vectorTileLayer("a4491c548e224efd9b93965d48cc1e56", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU",}),
+        gray1ref = L.esri.Vector.vectorTileLayer("c24a800f1f5c4bf8a7f54fad1fcf9d3f", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU",});
   
     var gray2base = L.esri.Vector.vectorTileLayer("2b5b2bed414e454e986799eaadd9faa1", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU"}),
         gray2ref = L.esri.Vector.vectorTileLayer("6697fa4437e24645af3512e21ce6d2ce", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU"});
   
+    var gray1 = L.layerGroup([gray1base, gray1ref]);
     var gray2 = L.layerGroup([gray2base, gray2ref]);
   
-    var streets = L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU"});
+    var streets = L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU"}),
+        sat = L.esri.Vector.vectorBasemapLayer("ArcGIS:Imagery:Labels", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU"});
   
     var baseMaps = {
-      "Accessible Grayscale": gray2,
-      "Streets": streets
+      "Accessible Grayscale (light)": gray1,
+      "Accessible Grayscale (dark)": gray2,
+      "Streets": streets,
+      "Satellite": sat
     };
   
     L.control.layers(baseMaps).addTo(map);
