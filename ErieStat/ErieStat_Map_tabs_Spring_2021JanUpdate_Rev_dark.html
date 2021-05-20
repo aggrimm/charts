@@ -123,6 +123,8 @@
     };
   
     var map = L.map("map", {layers: [gray1]}).setView([42.1, -82.0], 7);
+    
+    L.control.layers(baseMaps).addTo(map);
 
     const IS_EMPTY = (val) => val == "";
 
@@ -217,12 +219,6 @@
         loadChart(initWatershed + " River");
         renderWatershed(initWatershed);
     });
-    
-    var overlayMaps = {
-        "Monitoring Sites": p
-    };
-
-    L.control.layers(baseMaps,overlayMaps).addTo(map);
 
 
     map.on("click", function (e){
