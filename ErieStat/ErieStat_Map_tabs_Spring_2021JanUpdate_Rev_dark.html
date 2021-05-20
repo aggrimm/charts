@@ -127,11 +127,15 @@
     L.control.layers(baseMaps).addTo(map);
 
     const IS_EMPTY = (val) => val == "";
+    
+    map.createPane('wsheds');
+
 
     var srp_watershed_individual = L.esri.featureLayer({
         url: serviceURL + "/2",
         simplifyFactor: 0.7,
         weight: 1,
+        pane: 'wsheds',
         style: {
             color: "#93866E",
             fillColor: "#FFC461",
@@ -144,6 +148,7 @@
         opacity: 0.5,
         simplifyFactor: 0.7,
         weight: 2,
+        pane: 'wsheds',
         style: {
             color: "#80735D",
             fillColor: "#FFC461",
@@ -156,6 +161,7 @@
         opacity: 0.7,
         simplifyFactor: 0.7,
         weight: 2,
+        pane: 'wsheds',
         style: {
             color: "#80735D",
             fill: false,
