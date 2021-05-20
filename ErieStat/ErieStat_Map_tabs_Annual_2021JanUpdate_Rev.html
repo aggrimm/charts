@@ -16,6 +16,9 @@
     <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
             integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
             crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet-vector@3.0.0/dist/esri-leaflet-vector.js"
+            integrity="sha512-i3LCZC/OnZR2VtZJ7ftXbZivyjPVBKeOqWuJ9SqaBnuiG18GyzTrHWYPgf1geE1LmI9yRENWSEI3jcpKx1dgqg=="
+            crossorigin=""></script>
     <script src="//code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -89,10 +92,26 @@
     var metric2 = ES.metrics.Discharge;
     var selectedFeature;
 
+    var gray1base = L.esri.Vector.vectorTileLayer("a4491c548e224efd9b93965d48cc1e56", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU",}),
+        gray1ref = L.esri.Vector.vectorTileLayer("c24a800f1f5c4bf8a7f54fad1fcf9d3f", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU",});
+  
+    var gray1 = L.layerGroup([gray1base, gray1ref]);
+  
+    var topo = L.esri.basemapLayer("Topographic"),
+        sat = L.esri.basemapLayer("Imagery");
+  
+    var baseMaps = {
+      "Accessible Grayscale": gray1,
+      "Topographic": topo,
+      "Satellite": sat
+    };
+  
+    var map = L.map("map", {layers: [gray1]}).setView([42.1, -82.0], 7);
+    
+    L.control.layers(baseMaps).addTo(map);
+    
     const IS_EMPTY = (val) => val == "";
 
-    var map = L.map("map").setView([42.1, -82.0], 7);
-    L.esri.basemapLayer("Topographic").addTo(map);
 
     var tp_watershed_individual = L.esri.featureLayer({
         url: serviceURL + "/2",
@@ -252,6 +271,7 @@
                     color: "#2C2C2C"
                 });
                 selectedFeature.addTo(map);
+                selectedFeature.bringToFront();
                 // }
             }
         });
