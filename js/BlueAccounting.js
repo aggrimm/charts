@@ -132,7 +132,7 @@ function BlueAccounting(){
             title: {
                 text: title,
                 margin: 20,
-                widthAdjust: -300,
+                widthAdjust: -370,
                 style: {
                     color: '#000000',
                     fontWeight: 'bold'
@@ -240,7 +240,7 @@ function BlueAccounting(){
             title: {
                 text: title,
                 margin: 20,
-                widthAdjust: -300,
+                widthAdjust: -370,
                 style: {
                     color: this.ColorPicker.body,
                     fontWeight: 'bold'
@@ -393,7 +393,7 @@ function BlueAccounting(){
             title: {
                 text: title,
                 margin: 20,
-                widthAdjust: -300,
+                widthAdjust: -370,
                 style: {
                     color: this.ColorPicker.body,
                     fontWeight: 'bold'
