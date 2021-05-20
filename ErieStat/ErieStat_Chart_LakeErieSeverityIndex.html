@@ -86,12 +86,22 @@
         yAxis: {
             title: {
                 text: 'Bloom Severity'
-            }
+            },
+            plotLines: [{ // mark the target
+                className: "Target",
+                color: '#E07000',
+                width: 3,
+                value: 2.9,
+                dashStyle: "line"
+            }]
+                
         },
         credits: {
-            enabled: true,
-            href: 'javascript:window.open("https://tidesandcurrents.noaa.gov/hab/lakeerie.html", "_blank")',
-            text: "Source: NOAA",
+            enabled: false,
+        },
+        
+        caption: {
+            text: '<b>Chart source: </b><em>Great Lakes Commission, Blue Accounting, 2020, <a href="https://www.blueaccounting.org/progress/harmful-algal-blooms">https://www.blueaccounting.org/progress/harmful-algal-blooms</a></em> <br> <b>Data source: </b> <em><a href="https://tidesandcurrents.noaa.gov/hab/lakeerie.html">NOAA</a></em>'
         },
 
         plotOptions: {
@@ -115,7 +125,8 @@
         }],
     });
 
-    BA.addTargetLine(chart,2.9, "Target", "line");
+        
+
 
 //        ,{
 //        type: "line",
