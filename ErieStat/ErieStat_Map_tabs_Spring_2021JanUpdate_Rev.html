@@ -106,7 +106,12 @@
     var selectedFeature;
 
     var map = L.map("map").setView([42.1, -82.0], 7);
-    L.esri.basemapLayer("Topographic").addTo(map);
+    <!--L.esri.basemapLayer("Topographic").addTo(map);-->    
+ 
+ 
+    L.esri.Vector.vectorBasemapLayer("a4491c548e224efd9b93965d48cc1e56", {
+      apiKey: 'AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU'
+    }).addTo(map);
 
     const IS_EMPTY = (val) => val == "";
 
