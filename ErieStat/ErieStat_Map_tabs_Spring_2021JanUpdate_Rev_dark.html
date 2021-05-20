@@ -324,7 +324,7 @@
                     map.removeLayer(selectedFeature);
                 }
                 for (var i = 0; i < featureCollection.features.length; i++) {
-                    var selectedFeature = L.geoJSON(featureCollection.features[i]);
+                    selectedFeature = L.geoJSON(featureCollection.features[i]);
                     selectedFeature.setStyle({
                         fillColor: "#E07000",
                         weight: 4,
