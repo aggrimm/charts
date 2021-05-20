@@ -47,7 +47,7 @@
                 load: function () {
                     var logoX = 15;
                     var size = this.plotBox.y;
-                    size -= 5;
+                    size -= 40;
 
                     if(this.chartWidth < 500){
                         logoX = 10;
@@ -81,12 +81,21 @@
             }
         },
         title: {
-            text: 'Lake Erie Severity Index'
+            text: 'Lake Erie Severity Index',
+            margin: 20,
+            widthAdjust: -370,
+            style: {
+                color: '#000000',
+                fontWeight: 'bold'
+            }
         },
+        
         yAxis: {
             title: {
                 text: 'Bloom Severity'
             },
+            accessibility: {
+                description: "Cyanobacterial algae bloom severity",
             plotLines: [{ // mark the target
                 className: "Target",
                 color: '#E07000',
@@ -96,6 +105,13 @@
             }]
                 
         },
+            
+        legend: {
+            symbolHeight: 11,
+            symbolWidth: 11,
+            symbolRadius: 0
+        },
+            
         credits: {
             enabled: false,
         },
@@ -105,6 +121,9 @@
         },
 
         plotOptions: {
+            column: {
+                groupPadding: 0.1,
+            },
             series: {
                 label: {
                     connectorAllowed: false
@@ -120,7 +139,7 @@
             color: '#102A58'
         }, {
             name: 'Predicted CI Severity',
-            data: [{x: 2021, y: 6}],
+            data: [{x: 2021, y: 5}],
             color: '#6FC212'
         }],
     });
