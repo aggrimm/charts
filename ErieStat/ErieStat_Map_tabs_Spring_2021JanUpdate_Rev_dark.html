@@ -128,14 +128,10 @@
 
     const IS_EMPTY = (val) => val == "";
     
-    map.createPane('wsheds');
-
-
     var srp_watershed_individual = L.esri.featureLayer({
         url: serviceURL + "/2",
         simplifyFactor: 0.7,
         weight: 1,
-        pane: 'wsheds',
         style: {
             color: "#93866E",
             fillColor: "#FFC461",
@@ -148,7 +144,6 @@
         opacity: 0.5,
         simplifyFactor: 0.7,
         weight: 2,
-        pane: 'wsheds',
         style: {
             color: "#80735D",
             fillColor: "#FFC461",
@@ -161,7 +156,6 @@
         opacity: 0.7,
         simplifyFactor: 0.7,
         weight: 2,
-        pane: 'wsheds',
         style: {
             color: "#80735D",
             fill: false,
@@ -224,7 +218,6 @@
         // Default to Maumee river when page initialize
         ES.buildNarratives(initWatershed + ' River');
         loadChart(initWatershed + " River");
-        map.createPane('selected');
         renderWatershed(initWatershed);
     });
 
@@ -331,7 +324,7 @@
                     map.removeLayer(selectedFeature);
                 }
                 for (var i = 0; i < featureCollection.features.length; i++) {
-                    selectedFeature = L.geoJSON(featureCollection.features[i], {pane: selected});
+                    var selectedFeature = L.geoJSON(featureCollection.features[i]);
                     selectedFeature.setStyle({
                         fillColor: "#E07000",
                         weight: 4,
@@ -339,7 +332,9 @@
                         color: "#2C2C2C"
                     });
                     selectedFeature.addTo(map);
+                    selectedFeature.bringToFront();
                 }
+                
             }
         });
     }
