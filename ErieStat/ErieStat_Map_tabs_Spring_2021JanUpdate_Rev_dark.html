@@ -197,8 +197,7 @@
         tabs[i].style.display = "none";
     }
     
-    map.createPane('selected');
-    
+  
     $.getJSON("../data/ErieStat_2020.json", function(d){
         data = d;
     }).done(function () {
@@ -225,6 +224,7 @@
         // Default to Maumee river when page initialize
         ES.buildNarratives(initWatershed + ' River');
         loadChart(initWatershed + " River");
+        map.createPane('selected');
         renderWatershed(initWatershed);
     });
 
