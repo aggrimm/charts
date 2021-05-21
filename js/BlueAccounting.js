@@ -283,7 +283,16 @@ function BlueAccounting(){
                 min: 0,
                 opposite: true
             }],
-            
+            legend: {
+                symbolHeight: 11,
+                symbolWidth: 11,
+                symbolRadius: 0,
+                itemMarginBottom: 8,
+                itemStyle: {
+                    "word-wrap": "break-word",
+                    fontWeight: 'normal'
+                }
+            },
             caption: {
                 text: cap
             },
