@@ -193,9 +193,6 @@ function BlueAccounting(){
     this.buildDualAxesChart = function (series1, seriesName1, seriesUnit1, color1, chartType1,
                                         series2, seriesName2, seriesUnit2, color2, chartType2,
                                         tag, title, subtitle, desc, startingYear, target1, target2, cap, height, width, xAxis_title) {
-        
-        $(this.series[0].legendItem.element).css('font-weight', 'normal');
-        $(this.series[1].legendItem.element).css('font-weight', 'normal');
 
         var chart;
         if (!series1) {
