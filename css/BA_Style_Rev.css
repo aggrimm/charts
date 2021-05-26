@@ -19,7 +19,8 @@ body{
     /*text-transform: capitalize;*/
 }
 #narrative-section{
-    height: 20%;
+    height: 150px;
+        overflow-y:auto;
 }
 #narrative-caption {
     color: #1b75ba;
@@ -28,6 +29,7 @@ body{
 }
 
 #narrative-content{
+
     /*text-indent: 50px;*/
 }
 #watersheds {
