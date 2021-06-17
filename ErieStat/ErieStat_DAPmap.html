@@ -50,6 +50,10 @@
           
           watchUtils.when(legend, "container", function() {
             aspect.after(legend, "scheduleRender", function(response) {
+              if (query('.esri-legend__layer-caption')[0]) {
+                query('.esri-legend__layer-caption')[0].style.display = 'none';
+              if (query('.esri-legend__layer-caption')[1]) {
+                query('.esri-legend__layer-caption')[1].style.display = 'none';
               if (query('.esri-legend__layer-caption')[2]) {
                 query('.esri-legend__layer-caption')[2].style.display = 'none';
               }
