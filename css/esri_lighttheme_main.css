@@ -9443,7 +9443,7 @@ html[dir="rtl"]
   margin: auto;
 }
 .esri-legend__layer-caption {
-  display: table-caption;
+  display: none;
   padding: 6px 0;
 }
 .esri-legend__ramp-labels {
