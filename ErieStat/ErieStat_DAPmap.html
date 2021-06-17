@@ -20,7 +20,7 @@
 
     <script src="https://js.arcgis.com/4.19/"></script>
     <script>
-      require(["esri/views/MapView", "esri/widgets/Legend", "esri/WebMap", "esri/core/watchUtils", "dojo/query", "dojo/aspect", "dojo/domReady!"], function(MapView, Legend, WebMap) {
+      require(["esri/views/MapView", "esri/widgets/Legend", "esri/WebMap", "esri/core/watchUtils", "dojo/query", "dojo/aspect", "dojo/domReady!"], function(MapView, Legend, WebMap, watchUtils, query, aspect) {
         var webmap = new WebMap({
           portalItem: {
             // autocasts as new PortalItem()
