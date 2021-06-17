@@ -9494,7 +9494,7 @@ html[dir="rtl"]
   bottom: -3px;
 }
 .esri-legend-layer-caption {
-  display: table-caption;
+  display: none;
   padding: 6px 0;
 }
 html[dir="rtl"] .esri-legend__ramp-label:before {
