@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
     <title>Legend widget | Sample | ArcGIS API for JavaScript 4.19</title>
-    <link rel="stylesheet" href="../css/esri_lighttheme_main.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css" />
 
 
     <style>
@@ -20,7 +20,7 @@
 
     <script src="https://js.arcgis.com/4.19/"></script>
     <script>
-      require(["esri/views/MapView", "esri/widgets/Legend", "esri/WebMap"], function(MapView, Legend, WebMap) {
+      require(["esri/views/MapView", "esri/widgets/Legend", "esri/WebMap", "esri/core/watchUtils", "dojo/query", "dojo/aspect", "dojo/domReady!"], function(MapView, Legend, WebMap) {
         var webmap = new WebMap({
           portalItem: {
             // autocasts as new PortalItem()
@@ -47,6 +47,14 @@
               }
             ]
           });
+          
+          watchUtils.when(legend, "container", function() {
+            aspect.after(legend, "scheduleRender", function(response) {
+              if (query('.esri-legend__layer-caption')[0]) {
+                query('.esri-legend__layer-caption')[0].style.display = 'none';
+              }
+            });
+           });
 
           // Add widget to the bottom right corner of the view
           view.ui.add(legend, "bottom-right");
