@@ -100,16 +100,15 @@
     var topo = L.esri.basemapLayer("Topographic"),
     var sat = L.esri.basemapLayer("Imagery");
   
-    var baseMaps = {
-      "Accessible Grayscale": gray1,
-      "Topographic": topo,
-      "Satellite": sat
-    };
-  
-    var map = L.map("map", {layers: [gray1]}).setView([42.1, -82.0], 7);
-    
-    L.control.layers(baseMaps).addTo(map);
-    
+    var map = L.map("map", {
+        center: [42.1, -82.0],
+        zoom: 7
+    );
+        
+    // add default layers to map
+        
+    map.addLayer(gray1);
+       
     const IS_EMPTY = (val) => val == "";
 
 
@@ -146,6 +145,15 @@
             fill: false,
         }
     }).addTo(map);
+    
+    // add layer groups to layer switcher control    
+    var baseMaps = {
+      "Accessible Grayscale": gray1,
+      "Topographic": topo,
+      "Satellite": sat
+    };
+    
+    L.control.layers(baseMaps).addTo(map);
 
     // var labels = {};
 
