@@ -91,11 +91,15 @@
     var metric1 = ES.metrics.TP_L;
     var metric2 = ES.metrics.Discharge;
     var selectedFeature;
+    
+    // basemaps
 
-    var gray1base = L.esri.Vector.vectorTileLayer("a4491c548e224efd9b93965d48cc1e56", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU", zIndex: 1}),
-        gray1ref = L.esri.Vector.vectorTileLayer("c24a800f1f5c4bf8a7f54fad1fcf9d3f", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU", zIndex: 3});
-  
-    var gray1 = L.layerGroup([gray1base, gray1ref]);
+    
+    var gray1 = L.layerGroup();
+
+    L.esri.Vector.vectorTileLayer("a4491c548e224efd9b93965d48cc1e56", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU"}).addTo(gray1);
+    L.esri.Vector.vectorTileLayer("c24a800f1f5c4bf8a7f54fad1fcf9d3f", {apiKey: "AAPK58650c913093468cb730b917301196e0ivsVrrT_ghV_VjFooGm75QCtdR285831SeUdRcXWoPZhtUVAKzA-50tVTLWV-1ZU"}).addTo(gray1);
+   
   
     var topo = L.esri.basemapLayer("Topographic"),
         sat = L.esri.basemapLayer("Imagery");
@@ -147,13 +151,15 @@
     }).addTo(map);
     
     // add layer groups to layer switcher control    
+    
+    
     var baseMaps = {
       "Accessible Grayscale": gray1,
       "Topographic": topo,
       "Satellite": sat
     };
     
-    L.control.layers(baseMaps).addTo(map);
+    L.control.layers(baseMaps, {autoZIndex: false}).addTo(map);
 
     // var labels = {};
 
