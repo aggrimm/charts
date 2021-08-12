@@ -273,7 +273,7 @@
                 discharge_data_array, metric_discharge.name, metric_discharge.unit, BA.ColorPicker.blue6, "line",
                 "chart1", name + " " + metric1.name + " and " + metric_discharge.name, "<i>*SRP: Soluble reactive phosphorus</i>",
                 ES.xAxis_start, ES.targets[name][metric1.name], null, //ES.targets[name][metric2.name],
-                (window.innerHeight  - $("#narrative-section").height()) * 0.7
+                (window.innerHeight  - $("#narrative-section").height()) * 0.75
             );
         }else{
             $("#chart1").html("<i>* Data under development.</i>");
@@ -282,7 +282,7 @@
         if(!s2_data_array.every(IS_EMPTY)){
             var chart2 = BA.buildSingleChart("line", s2_data_array, metric2.name, metric2.unit, BA.ColorPicker.blue7,
                 ES.xAxis_start, name + " " + metric2.name, "<i>*SRP: Soluble reactive phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
-                ES.targets[name][metric2.name], "chart2", (window.innerHeight  - $("#narrative-section").height()) * 0.7
+                ES.targets[name][metric2.name], "chart2", (window.innerHeight  - $("#narrative-section").height()) * 0.75
             );
         }
         else {
@@ -294,7 +294,7 @@
                 discharge_data_array, metric_discharge.name, metric_discharge.unit, BA.ColorPicker.blue6, "line",
                 "chart3", name + " " + metric3.name + " and " + metric_discharge.name, "<i>*TP: Total phosphorus</i>",
                 ES.xAxis_start, ES.targets[name][metric3.name], null, //ES.targets[name][metric2.name],
-                (window.innerHeight  - $("#narrative-section").height()) * 0.7
+                (window.innerHeight  - $("#narrative-section").height()) * 0.75
             );
         }else{
             $("#chart3").html("<i>* Data under development.</i>");
@@ -303,7 +303,7 @@
         if(!s4_data_array.every(IS_EMPTY)){
             var chart4 = BA.buildSingleChart("line", s4_data_array, metric4.name, metric4.unit, BA.ColorPicker.blue7,
                 ES.xAxis_start, name + " " + metric4.name, "<i>*TP: Total phosphorus</i><br><i>*FWMC: Flow-weighted mean concentration</i>",
-                ES.targets[name][metric4.name], "chart4", (window.innerHeight  - $("#narrative-section").height()) * 0.7
+                ES.targets[name][metric4.name], "chart4", (window.innerHeight  - $("#narrative-section").height()) * 0.75
             );
         }else{
             $("#chart4").html("<i>* Data under development.</i>");
