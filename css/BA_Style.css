@@ -8,6 +8,8 @@ body{
     margin-left: 50%;
     padding-left: 6px;
     margin-right: 10px;
+    padding-bottom: 0px;
+    margin-bottom: 0px
 }
 #intro{
     /*font-style: italic;*/
