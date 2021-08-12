@@ -45,7 +45,23 @@
     top: 10px;
     /* text-shadow: 0px 2px 1px rgba(255,255,255,0.85); */
   }
-
+    
+#wrapper
+{
+ margin:0 auto;
+ padding:0px;
+ text-align:center;
+ width:995px;
+}
+#wrapper .fullscreen_button
+{
+ background:none;
+ border:2px solid #585858;
+ color:#585858;
+ width:200px;
+ height:40px;
+ font-weight:bold;
+}	
 </style>
 
 <div>
@@ -86,6 +102,11 @@
             <div id="chart4" class="charts"></div>
         </div>
     </div>
+</div>
+<div id="wrapper">
+
+<input type="button" class="fullscreen_button" value="VIEW FULLSCREEN">
+
 </div>
 
 
@@ -329,6 +350,14 @@
         // Maintain current tab open
         evt.currentTarget.id = "defaultOpen";
     }
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+ $(".fullscreen_button").on("click", function() 
+ {
+  document.fullScreenElement && null !== document.fullScreenElement || !document.mozFullScreen && !document.webkitIsFullScreen ? document.documentElement.requestFullScreen ? document.documentElement.requestFullScreen() : document.documentElement.mozRequestFullScreen ? document.documentElement.mozRequestFullScreen() : document.documentElement.webkitRequestFullScreen && document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT) : document.cancelFullScreen ? document.cancelFullScreen() : document.mozCancelFullScreen ? document.mozCancelFullScreen() : document.webkitCancelFullScreen && document.webkitCancelFullScreen()
+ });	
+});
 </script>
 </body>
 </html>
