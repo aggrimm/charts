@@ -10,6 +10,7 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="../js/BlueAccounting.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Optional theme -->
@@ -27,7 +28,7 @@
 <body>
     <div id="vessel_transits"></div>
     <script>
-     /* var BA = new BlueAccounting(); */
+     var BA = new BlueAccounting(); 
      Highcharts.setOptions({
          lang: {
              numericSymbols: null,
@@ -41,6 +42,9 @@
 
             chart: {
                 background: "transparent",
+                style: {
+                    color: BA.ColorPicker.body
+                },
             },
 
             title: {
