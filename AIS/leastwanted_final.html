@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Least Wanted Fish</title>
+    <script rel="script" src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
 
+    <!--<script rel="script" src="/charts/js/ba_charts.js"></script>-->
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script rel="script" src="/charts/js/export-csv_glc.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="../js/BlueAccounting.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <style>
+    body, svg, text {
+        font-family: "Montserrat", sans-serif;
+        }
+        </style>
+</head>
+    
+<body>
+    <div id="vessel_transits"></div>
+    <script>
+     var BA = new BlueAccounting();
+     Highcharts.setOptions({
+         lang: {
+             numericSymbols: null,
+             thousandsSep: ',',
+         }
+     });
+     var options_transit = {
+        /**
+         * Code to add highcharts
+         */
+
+            chart: {
+                backgroundColor: '#F2FAFF'
+            },
+
+            title: {
+                text: 'Number of "Least Wanted" Species Regulated by Jurisdiction',
+                style: {
+                    fontFamily: '"Montserrat", sans-serif',
+                    color: "#333333",
+                    fontSize: "18px",
+                    fontWeight: "normal",
+                    fontStyle: "normal",
+                  },
+                  margin: 15,
+                  widthAdjust: -44,
+            },
+
+            subtitle: {
+
+                text: "The number of “least wanted” species that are regulated by each jurisdiction has continued to increase. The possession and sale of most of the original (2013) least wanted species are now restricted across most Great Lakes states and provinces.",
+            align: "left",
+            y: -10,
+            verticalAlign: "bottom",
+            },
+
+            exporting: {
+                enabled: true
+            },
+
+            yAxis: {
+                title: {
+                    text: '# of Least Wanted Species Regulated (Out of 21)',                    
+                },
+                plotLines: [{
+                    color: '#E07000',
+                    width: 2,
+                    value: 21
+                }]
+            },
+
+            xAxis: {
+                title: {},
+                type: "category",
+                categories: ['IL','IN','MI','MN','NY','OH','ON','PA','QC','WI']
+            },
+
+
+            
+            legend: { 
+                padding: 8, 
+                symbolHeight: 11,
+                symbolWidth: 11,
+                symbolRadius: 0,
+                itemStyle: {fontWeight: "normal"}
+            },
+
+            credits: {
+                enabled: false,
+            },
+            
+            caption: {
+                text: '<b>Source: </b><em><a href="https://www.blueaccounting.org/progress/prevent-trade-live-organisms-pathway">Great Lakes Commission, Blue Accounting, 2020</a></em>'
+            },
+
+
+            plotOptions: {
+                series: { 
+                    dataLabels: { enabled: false }, 
+                    animation: false,
+                    
+                 },
+            },
+       
+            series: [{
+                name: '2008',
+                data: [4, 5, 12, 11, 4, 6, 5, 5, 0, 0],
+                type: "column",
+                color: "#0D5E87"
+            }, {
+                name: '2014',
+                data: [10, 11, 19, 15, 14, 11, 5, 5, 8, 15],
+                type: "column",
+                color: "#008181"
+            }, {
+                name: '2020',
+                data: [18, 14, 21, 16, 14, 14, 16, 6, 8, 18],
+                type: "column",
+                color: "#9FDB7F"
+
+            }],
+       
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+       
+        });
+
+     Highcharts.chart('vessel_transits', options_transit);
+    </script>
+</body>
+</html>
