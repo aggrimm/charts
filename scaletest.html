@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Balance Scale</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f4f7f6;
+    padding-top: 50px;
+  }
+  .controls {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  .control-group input {
+    width: 100px;
+    padding: 8px;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .scale-container {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .base {
+    width: 20px;
+    height: 120px;
+    background: #333;
+    position: absolute;
+    bottom: 0;
+  }
+  .beam {
+    width: 350px;
+    height: 12px;
+    background: #555;
+    position: absolute;
+    bottom: 120px;
+    transition: transform 0.4s ease-out;
+    transform-origin: center;
+  }
+  .beam::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #333;
+    border-radius: 50%;
+    top: -4px;
+    left: 165px;
+  }
+  .pan-left, .pan-right {
+    position: absolute;
+    width: 100px;
+    bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .pan-left { left: 20px; }
+  .pan-right { right: 20px; }
+
+  .pan-string {
+    width: 4px;
+    height: 80px;
+    background: #888;
+  }
+  .pan-plate {
+    width: 80px;
+    height: 15px;
+    background: #bbb;
+    border-radius: 0 0 10px 10px;
+  }
+  .icon {
+    font-size: 36px;
+    margin-bottom: 5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <div class="control-group">
+    <div class="icon">🍎</div>
+    <label for="left-val">Left Side:</label>
+    <input type="number" id="left-val" value="5" min="0" oninput="updateScale()">
+  </div>
+  
+  <div class="control-group">
+    <div class="icon">📦</div>
+    <label for="right-val">Right Side:</label>
+    <input type="number" id="right-val" value="5" min="0" oninput="updateScale()">
+  </div>
+</div>
+
+<div class="scale-container">
+  <div class="base"></div>
+  <div class="beam" id="beam">
+    <div class="pan-left">
+      <div class="pan-string"></div>
+      <div class="pan-plate"></div>
+    </div>
+    <div class="pan-right">
+      <div class="pan-string"></div>
+      <div class="pan-plate"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateScale() {
+    const left = parseFloat(document.getElementById('left-val').value) || 0;
+    const right = parseFloat(document.getElementById('right-val').value) || 0;
+    const beam = document.getElementById('beam');
+
+    // Calculate the difference. Max tilt is set to 25 degrees.
+    let tilt = 0;
+    if (left > right) {
+      tilt = -25;
+    } else if (right > left) {
+      tilt = 25;
+    }
+    beam.style.transform = `rotate(${tilt}deg)`;
+  }
+</script>
+
+</body>
+</html>
