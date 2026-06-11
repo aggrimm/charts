@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Balance Scale</title>
+<title>Interactive Stacking Balance Scale</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -13,134 +13,174 @@
     background: #f4f7f6;
     padding-top: 50px;
   }
-  .controls {
-    display: flex;
-    gap: 40px;
-    margin-bottom: 30px;
-  }
-  .control-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
-  .control-group input {
-    width: 100px;
-    padding: 8px;
-    font-size: 16px;
-    text-align: center;
-    margin-top: 10px;
-  }
+  
   .scale-container {
     position: relative;
-    width: 400px;
-    height: 300px;
+    width: 500px;
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    margin-top: 50px;
   }
+  
   .base {
-    width: 20px;
-    height: 120px;
+    width: 24px;
+    height: 160px;
     background: #333;
     position: absolute;
     bottom: 0;
+    border-radius: 4px 4px 0 0;
   }
+  
   .beam {
-    width: 350px;
-    height: 12px;
+    width: 420px;
+    height: 14px;
     background: #555;
     position: absolute;
-    bottom: 120px;
-    transition: transform 0.4s ease-out;
+    bottom: 160px;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform-origin: center;
   }
+  
   .beam::before {
     content: '';
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background: #333;
+    width: 24px;
+    height: 24px;
+    background: #222;
     border-radius: 50%;
-    top: -4px;
-    left: 165px;
+    top: -5px;
+    left: 198px;
   }
+  
+  /* Pans hang from the beam ends */
   .pan-left, .pan-right {
     position: absolute;
-    width: 100px;
-    bottom: 100px;
+    width: 120px;
+    top: 7px; /* Hangs from the beam */
     display: flex;
     flex-direction: column;
     align-items: center;
+    transform-origin: top center;
+    /* Keeps the pans perfectly upright while the beam tilts */
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
   }
-  .pan-left { left: 20px; }
-  .pan-right { right: 20px; }
+  .pan-left { left: 10px; }
+  .pan-right { right: 10px; }
 
-  .pan-string {
-    width: 4px;
-    height: 80px;
-    background: #888;
-  }
-  .pan-plate {
+  .strings {
     width: 80px;
-    height: 15px;
-    background: #bbb;
-    border-radius: 0 0 10px 10px;
+    height: 100px;
+    border-left: 2px solid #888;
+    border-right: 2px solid #888;
+    position: relative;
   }
-  .icon {
-    font-size: 36px;
-    margin-bottom: 5px;
+  
+  /* Invisible container inside strings to build the icon stack upwards */
+  .icon-stack {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column-reverse; /* Builds stack from bottom to top */
+    align-items: center;
+    gap: -5px; /* Slight overlap for tight stacking */
+  }
+  
+  .stacked-icon {
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: -2px; /* Tightens the visual stack */
+    filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.15));
+  }
+
+  .plate {
+    width: 110px;
+    height: 12px;
+    background: #aaa;
+    border-radius: 0 0 12px 12px;
+    border-top: 2px solid #888;
   }
 </style>
 </head>
 <body>
 
-<div class="controls">
-  <div class="control-group">
-    <div class="icon">🍎</div>
-    <label for="left-val">Left Side:</label>
-    <input type="number" id="left-val" value="5" min="0" oninput="updateScale()">
-  </div>
-  
-  <div class="control-group">
-    <div class="icon">📦</div>
-    <label for="right-val">Right Side:</label>
-    <input type="number" id="right-val" value="5" min="0" oninput="updateScale()">
-  </div>
-</div>
-
 <div class="scale-container">
   <div class="base"></div>
+  
   <div class="beam" id="beam">
-    <div class="pan-left">
-      <div class="pan-string"></div>
-      <div class="pan-plate"></div>
+    
+    <!-- Left Pan -->
+    <div class="pan-left" id="pan-left">
+      <div class="strings">
+        <div class="icon-stack" id="left-stack"></div>
+      </div>
+      <div class="plate"></div>
     </div>
-    <div class="pan-right">
-      <div class="pan-string"></div>
-      <div class="pan-plate"></div>
+    
+    <!-- Right Pan -->
+    <div class="pan-right" id="pan-right">
+      <div class="strings">
+        <div class="icon-stack" id="right-stack"></div>
+      </div>
+      <div class="plate"></div>
     </div>
+    
   </div>
 </div>
 
 <script>
-  function updateScale() {
-    const left = parseFloat(document.getElementById('left-val').value) || 0;
-    const right = parseFloat(document.getElementById('right-val').value) || 0;
-    const beam = document.getElementById('beam');
+  // Define your default config here
+  const CONFIG = {
+    leftIcon: '🍎',
+    rightIcon: '📦',
+    maxTilt: 22 // Max rotation angle in degrees
+  };
 
-    // Calculate the difference. Max tilt is set to 25 degrees.
+  function initScale() {
+    // 1. Parse numbers from the URL parameters (?left=X&right=Y)
+    const urlParams = new URLSearchParams(window.location.search);
+    const leftCount = parseInt(urlParams.get('left')) || 0;
+    const rightCount = parseInt(urlParams.get('right')) || 0;
+
+    // 2. Generate the visual icon stacks
+    buildStack('left-stack', CONFIG.leftIcon, leftCount);
+    buildStack('right-stack', CONFIG.rightIcon, rightCount);
+
+    // 3. Calculate physics and angle
+    const beam = document.getElementById('beam');
+    const pLeft = document.getElementById('pan-left');
+    const pRight = document.getElementById('pan-right');
+    
     let tilt = 0;
-    if (left > right) {
-      tilt = -25;
-    } else if (right > left) {
-      tilt = 25;
+    if (leftCount > rightCount) {
+      tilt = -CONFIG.maxTilt;
+    } else if (rightCount > leftCount) {
+      tilt = CONFIG.maxTilt;
     }
+
+    // 4. Apply counter-rotation to pans so they remain vertically straight
     beam.style.transform = `rotate(${tilt}deg)`;
+    pLeft.style.transform = `rotate(${-tilt}deg)`;
+    pRight.style.transform = `rotate(${-tilt}deg)`;
   }
+
+  function buildStack(elementId, icon, count) {
+    const container = document.getElementById(elementId);
+    container.innerHTML = ''; // Clear previous items
+    
+    for (let i = 0; i < count; i++) {
+      const iconDiv = document.createElement('div');
+      iconDiv.className = 'stacked-icon';
+      iconDiv.textContent = icon;
+      container.appendChild(iconDiv);
+    }
+  }
+
+  // Run the function when the page loads
+  window.onload = initScale;
 </script>
 
 </body>
