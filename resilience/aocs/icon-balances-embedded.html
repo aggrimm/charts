@@ -258,7 +258,7 @@
 
     .detail {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
       margin-top: 16px;
     }
@@ -323,7 +323,7 @@
     @media (max-width: 760px) {
       main {
         width: min(1120px, calc(100% - 18px));
-        padding-top: 16px;
+        padding: 8px 0 16px;
       }
 
       header {
@@ -345,15 +345,16 @@
       }
 
       .balance {
-        min-height: 340px;
+        min-height: 0;
       }
 
       .balance-svg {
-        height: 340px;
+        height: auto;
+        aspect-ratio: 1000 / 440;
       }
 
       .detail {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .legend {
@@ -365,6 +366,12 @@
         white-space: normal;
       }
     }
+
+    @media (max-width: 420px) {
+      .detail {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -373,9 +380,8 @@
 
     <div class="legend" aria-label="Status legend">
       <span class="legend-item"><span class="swatch" style="background: var(--red)"></span>Impaired</span>
-      <span class="legend-item"><span class="swatch" style="background: var(--yellow)"></span>Requires further assessment</span>
-      <span class="legend-item"><span class="swatch" style="background: var(--green)"></span>Not impaired</span>
-      <span class="legend-item"><span class="swatch" style="background: #d8d8d8"></span>Not applicable</span>
+      <span class="legend-item"><span class="swatch" style="background: var(--green)"></span>Impairment removed</span>
+      <span class="legend-item"><span class="swatch" style="background: #d8d8d8"></span>Never designated as impaired</span>
     </div>
 
     <section class="detail" id="detail" aria-label="Selected class summary"></section>
@@ -498,10 +504,9 @@
     };
 
     const STATUS_LABELS = {
-      green: "Not impaired",
-      yellow: "Requires further assessment",
+      green: "Impairment removed",
       red: "Impaired",
-      hidden: "Never designated as impaired (not shown)"
+      hidden: "Never designated as impaired"
     };
 
     const HIDDEN_STATUSES = new Set(["hidden", "none", "not_shown", "notshown", "not-applicable", "not_applicable", "na", "n/a"]);
@@ -511,6 +516,7 @@
     const tooltip = document.querySelector("#tooltip");
     let activeClassId = getClassId();
     let animationTimer;
+    let heightFrame;
 
     function getClassId() {
       const params = new URLSearchParams(window.location.search);
@@ -529,7 +535,7 @@
         const status = normalizeStatus(statusMap[icon.id]);
         groups[status].push(icon);
         return groups;
-      }, { green: [], yellow: [], red: [], hidden: [] });
+      }, { green: [], red: [], hidden: [] });
     }
 
     function normalizeStatus(status) {
@@ -538,7 +544,11 @@
         return "hidden";
       }
 
-      return ["green", "yellow", "red"].includes(normalized) ? normalized : "hidden";
+      if (normalized === "yellow") {
+        return "red";
+      }
+
+      return ["green", "red"].includes(normalized) ? normalized : "hidden";
     }
 
     function pyramidPositions(count, anchorX, baseY, direction = 1) {
@@ -599,15 +609,10 @@
       const tilt = Math.max(-12, Math.min(12, (greenCount - redCount) * 2.2));
       const leftPositions = pyramidPositions(redCount, 280, 175, 1);
       const rightPositions = pyramidPositions(greenCount, 720, 175, -1);
-      const centerPositionsList = columnPositions(groups.yellow.length, 500, 175);
-
       const sideIcons = [
         ...groups.red.map((icon, index) => iconMarkup(icon, "red", leftPositions[index].x, leftPositions[index].y, year, balanceKey, index)),
-        ...groups.green.map((icon, index) => iconMarkup(icon, "green", rightPositions[index].x, rightPositions[index].y, year, balanceKey, groups.red.length + groups.yellow.length + index))
+        ...groups.green.map((icon, index) => iconMarkup(icon, "green", rightPositions[index].x, rightPositions[index].y, year, balanceKey, groups.red.length + index))
       ].join("");
-      const centerIcons = groups.yellow
-        .map((icon, index) => iconMarkup(icon, "yellow", centerPositionsList[index].x, centerPositionsList[index].y, year, balanceKey, groups.green.length + index))
-        .join("");
 
       return `
         <article class="balance" aria-label="${year} balance">
@@ -620,17 +625,16 @@
             </g>
             <polygon class="fulcrum" points="500,203 426,295 574,295"></polygon>
             <text class="year-label" x="500" y="262">${year}</text>
-            ${centerIcons}
           </svg>
         </article>
       `;
     }
 
     function renderDetails(classData) {
-      const aggregate = { green: new Set(), yellow: new Set(), red: new Set(), hidden: new Set() };
+      const aggregate = { green: new Set(), red: new Set(), hidden: new Set() };
       ICONS.forEach(icon => aggregate[normalizeStatus(classData.balances.current[icon.id])].add(icon.label));
 
-      detail.innerHTML = ["red", "yellow", "green", "hidden"].map(status => {
+      detail.innerHTML = ["red", "green", "hidden"].map(status => {
         const items = [...aggregate[status]].sort();
         const body = items.length
           ? `<ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>`
@@ -655,6 +659,7 @@
       renderDetails(classData);
       bindTooltips();
       stageBalanceAnimations();
+      reportHeight();
     }
 
     function stageBalanceAnimations() {
@@ -665,7 +670,19 @@
 
       animationTimer = window.setTimeout(() => {
         balances.forEach(balance => balance.classList.add("settled"));
+        reportHeight();
       }, settleDelay);
+    }
+
+    function reportHeight() {
+      window.cancelAnimationFrame(heightFrame);
+      heightFrame = window.requestAnimationFrame(() => {
+        const height = Math.ceil(document.documentElement.scrollHeight);
+        window.parent.postMessage({
+          type: "icon-balances:resize",
+          height
+        }, "*");
+      });
     }
 
     function bindTooltips() {
@@ -688,7 +705,7 @@
     function cycleIcon(event) {
       const iconId = event.currentTarget.dataset.icon;
       const balanceKey = event.currentTarget.dataset.balance;
-      const statuses = ["red", "yellow", "green"];
+      const statuses = ["red", "green"];
       const statusMap = CLASSES[activeClassId].balances[balanceKey];
       const currentIndex = statuses.indexOf(normalizeStatus(statusMap[iconId]));
       statusMap[iconId] = statuses[(currentIndex + 1) % statuses.length];
@@ -712,6 +729,16 @@
     function hideTip() {
       tooltip.classList.remove("visible");
     }
+
+    new ResizeObserver(reportHeight).observe(document.documentElement);
+    window.addEventListener("load", reportHeight);
+    window.addEventListener("resize", reportHeight);
+    window.addEventListener("message", event => {
+      if (event.data?.type === "icon-balances:request-height") {
+        reportHeight();
+      }
+    });
+    document.fonts?.ready.then(reportHeight);
 
     render();
   </script>
