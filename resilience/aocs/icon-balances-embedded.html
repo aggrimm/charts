@@ -452,55 +452,128 @@
       { id: "habitats", label: "Loss of Fish and Wildlife Habitat" },
     ];
 
-    const CLASSES = {
-      "ashtabula-river": {
-        name: "Ashtabula River",
-        startYear: 1987,
-        balances: {
-          start: {
-            fish: "red", flavor: "hidden", populations: "red", tumours: "red", bird_deformities: "hidden", benthos: "red", 
-            dredging: "red", algae: "hidden", drinkingwater: "hidden", beaches: "hidden",
-            aesthetics: "hidden", costs: "hidden", plankton: "hidden", habitats: "red"
-          },
-          current: {
-            fish: "green", flavor: "hidden", populations: "green", tumours: "green", bird_deformities: "hidden", benthos: "green", 
-            dredging: "green", algae: "hidden", drinkingwater: "hidden", beaches: "hidden",
-            aesthetics: "hidden", costs: "hidden", plankton: "hidden", habitats: "green"
-          }
-        }
-      },
-      "bay-of-quinte": {
-        name: "Bay of Quinte",
-        startYear: 1987,
-        balances: {
-          start: {
-            fish: "red", flavor: "hidden", populations: "red", tumours: "red", bird_deformities: "hidden", benthos: "red", 
-            dredging: "red", algae: "red", drinkingwater: "red", beaches: "red",
-            aesthetics: "red", costs: "hidden", plankton: "red", habitats: "red"
-          },
-          current: {
-            fish: "yellow", flavor: "hidden", populations: "green", tumours: "green", bird_deformities: "hidden", benthos: "green", 
-            dredging: "green", algae: "yellow", drinkingwater: "green", beaches: "green",
-            aesthetics: "green", costs: "hidden", plankton: "yellow", habitats: "green"
-          }
-        }
-      },
-      "black-river": {
-        name: "Black River",
-        startYear: 1987,
-        balances: {
-          start: {
-            fish: "red", flavor: "hidden", populations: "red", tumours: "red", bird_deformities: "hidden", benthos: "red", 
-            dredging: "red", algae: "red", drinkingwater: "hidden", beaches: "red",
-            aesthetics: "red", costs: "hidden", plankton: "hidden", habitats: "red"
-          },
-          current: {
-            fish: "green", flavor: "hidden", populations: "green", tumours: "green", bird_deformities: "hidden", benthos: "red", 
-            dredging: "green", algae: "green", drinkingwater: "hidden", beaches: "green",
-            aesthetics: "green", costs: "hidden", plankton: "hidden", habitats: "green"
-          }
-        }
-      }
+    const SITE_NAMES = {
+      ashtabula: "Ashtabula River",
+      bayofquinte: "Bay of Quinte",
+      blackriver: "Black River",
+      buffaloriver: "Buffalo River",
+      clintonriver: "Clinton River",
+      collingwood: "Collingwood Harbour",
+      cuyahoga: "Cuyahoga River",
+      deerlake: "Deer Lake",
+      "detroit-can": "Detroit River (Canada)",
+      "detroit-us": "Detroit River (United States)",
+      eighteenmile: "Eighteenmile Creek",
+      grandcalumet: "Grand Calumet River",
+      greenbay: "Green Bay",
+      hamilton: "Hamilton Harbour",
+      jackfish: "Jackfish Bay",
+      kalamazoo: "Kalamazoo River",
+      manistique: "Manistique River",
+      maumee: "Maumee River",
+      menominee: "Menominee River",
+      milwaukee: "Milwaukee Estuary",
+      muskegon: "Muskegon Lake",
+      "niagara-can": "Niagara River (Canada)",
+      "niagara-us": "Niagara River (United States)",
+      nipigon: "Nipigon Bay",
+      oswego: "Oswego River",
+      peninsula: "Peninsula Harbour",
+      porthope: "Port Hope Harbour",
+      presqueisle: "Presque Isle Bay",
+      riverraisin: "River Raisin",
+      rochester: "Rochester Embayment",
+      rouge: "Rouge River",
+      saginaw: "Saginaw River and Bay",
+      severn: "Severn Sound",
+      sheboygan: "Sheboygan River",
+      spanishharbour: "Spanish Harbour",
+      "stclair-can": "St. Clair River (Canada)",
+      "stclair-us": "St. Clair River (United States)",
+      "stlawrence-can": "St. Lawrence River (Canada)",
+      "stlawrence-us": "St. Lawrence River (United States)",
+      stlouis: "St. Louis River",
+      "stmarys-can": "St. Marys River (Canada)",
+      "stmarys-us": "St. Marys River (United States)",
+      thunderbay: "Thunder Bay",
+      torchlake: "Torch Lake",
+      toronto: "Toronto and Region",
+      waukegan: "Waukegan Harbor",
+      wheatley: "Wheatley Harbour",
+      whitelake: "White Lake"
+    };
+
+    const SITE_STATUS_ROWS = [
+      ["ashtabula", "GHGGHGGHHHHHHG"],
+      ["bayofquinte", "RHGGHGGRGGGHRG"],
+      ["blackriver", "GHGGHRGGHGGHHG"],
+      ["buffaloriver", "RGGGRGGHHHGHHG"],
+      ["clintonriver", "RHRHHRRRHRGHHR"],
+      ["collingwood", "GHGHGGGGHGGHGG"],
+      ["cuyahoga", "GHRGHRRGHGGHHR"],
+      ["deerlake", "GHHHGHHGHHHHHH"],
+      ["detroit-can", "RGRRRRRHGGGGHR"],
+      ["detroit-us", "RGRRRRRHGRRHHR"],
+      ["eighteenmile", "RHGHRRGHHHHHHH"],
+      ["grandcalumet", "RRRRRRRRGRRGRR"],
+      ["greenbay", "RGRRRRGRRRGHRR"],
+      ["hamilton", "RHRRRRRRHRRHRR"],
+      ["jackfish", "RHRGGRGHHHRHHR"],
+      ["kalamazoo", "RHRHRRRHHGGHHR"],
+      ["manistique", "RHHHHGGHHGHHHG"],
+      ["maumee", "GHRRHRGRHRGGHR"],
+      ["menominee", "GHGHHGGHHGHHHG"],
+      ["milwaukee", "RHRRRRRRHRGHRR"],
+      ["muskegon", "GHGHHGGGGGGHHG"],
+      ["niagara-can", "RHRGGRGGHGHHGR"],
+      ["niagara-us", "RHRGRRRHHHHHHR"],
+      ["nipigon", "HGGGHGGGHHGHHG"],
+      ["oswego", "GHGHHHHGHHHHHG"],
+      ["peninsula", "RHGGHGGHHHHHHG"],
+      ["porthope", "HHHHHHRHHHHHHH"],
+      ["presqueisle", "HHHGHHGHHHHHHH"],
+      ["riverraisin", "RHGHRRRGHGGHHG"],
+      ["rochester", "GGGGGGGGGGGGGG"],
+      ["rouge", "RHRRHRRRHRRHHR"],
+      ["saginaw", "RGRHRRRRGRRHRG"],
+      ["severn", "GHGHHHGGHHGHHG"],
+      ["sheboygan", "RHRRRGGGHHHHGR"],
+      ["spanishharbour", "RHGHGRGHHGHGGG"],
+      ["stclair-can", "RGRGGRGHGGGGHR"],
+      ["stclair-us", "RGGHGHGHRGGGHG"],
+      ["stlawrence-can", "RGRRGGGRGGGGRR"],
+      ["stlawrence-us", "RHRRRRHHHHHHGR"],
+      ["stlouis", "RHGGHRRGHRGHHR"],
+      ["stmarys-can", "RHGRGRGGHGGHHR"],
+      ["stmarys-us", "RHGRGRGGHGGHHG"],
+      ["thunderbay", "RHGGGRGHHGGGGR"],
+      ["torchlake", "RHHGHRHHHHHHHH"],
+      ["toronto", "RHRGGGGRHRGHRR"],
+      ["waukegan", "RHHHHGGHHGHHGG"],
+      ["wheatley", "GHGHHGGGHHHHHG"],
+      ["whitelake", "GHGHHGGGGHGHHG"]
+    ];
+
+    const STATUS_CODES = { R: "red", G: "green", H: "hidden" };
+
+    const CLASSES = Object.fromEntries(SITE_STATUS_ROWS.map(([id, codes]) => {
+      const current = Object.fromEntries(ICONS.map((icon, index) => [icon.id, STATUS_CODES[codes[index]]]));
+      const start = Object.fromEntries(ICONS.map(icon => [
+        icon.id,
+        current[icon.id] === "hidden" ? "hidden" : "red"
+      ]));
+
+      return [id, {
+        name: SITE_NAMES[id],
+        startYear: id === "presqueisle" ? 1991 : 1987,
+        balances: { start, current }
+      }];
+    }));
+
+    const CLASS_ALIASES = {
+      "ashtabula-river": "ashtabula",
+      "bay-of-quinte": "bayofquinte",
+      "black-river": "blackriver"
     };
 
     const STATUS_LABELS = {
@@ -521,7 +594,8 @@
     function getClassId() {
       const params = new URLSearchParams(window.location.search);
       const requested = params.get("class") || params.get("classId") || params.get("id");
-      return CLASSES[requested] ? requested : Object.keys(CLASSES)[0];
+      const resolved = CLASS_ALIASES[requested] || requested;
+      return CLASSES[resolved] ? resolved : Object.keys(CLASSES)[0];
     }
 
     function setClassId(id) {
